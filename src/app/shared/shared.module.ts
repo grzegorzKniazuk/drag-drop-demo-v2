@@ -1,25 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material.module';
-import { FileUploaderComponent } from 'src/app/shared/components/file-uploader/file-uploader.component';
 import { NoSlidesInPresentationComponent } from 'src/app/shared/components/no-slides-in-presentation/no-slides-in-presentation.component';
+import { NoSlidesInPresentationDirective } from 'src/app/shared/directives/no-slides-in-presentation.directive';
+
+const components = [
+    NoSlidesInPresentationComponent,
+];
+
+const entryConponents = [
+    NoSlidesInPresentationComponent,
+];
+
+const directives = [
+    NoSlidesInPresentationDirective,
+];
+
+const modules = [
+    CommonModule,
+    MaterialModule,
+];
 
 @NgModule({
     declarations: [
-        FileUploaderComponent,
-        NoSlidesInPresentationComponent,
+        ...components,
+        ...directives,
     ],
     entryComponents: [
-        NoSlidesInPresentationComponent,
+        ...entryConponents,
     ],
     imports: [
-        CommonModule,
-        MaterialModule,
+        ...modules,
     ],
     exports: [
-        MaterialModule,
-        FileUploaderComponent,
-        NoSlidesInPresentationComponent,
+        ...modules,
+        ...components,
+        ...directives,
     ],
 })
 export class SharedModule {

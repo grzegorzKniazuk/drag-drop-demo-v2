@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { PresentationCreatorComponent } from './components/presentation-creator/presentation-creator.component';
 import { DashboardRoutingModule } from 'src/app/modules/dashboard/dashboard-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -10,8 +10,8 @@ import { DashboardRoutingModule } from 'src/app/modules/dashboard/dashboard-rout
         PresentationCreatorComponent,
     ],
     imports: [
-        CommonModule,
         DashboardRoutingModule,
+        SharedModule,
     ],
 })
 export class DashboardModule {

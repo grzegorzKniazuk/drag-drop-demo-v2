@@ -1,3 +1,5 @@
-<p>
-  no-slides-in-presentation works!
-</p>
+<div class="no-slides-container" (click)="clickIntoLabel()">
+    <span>Brak slajdów</span>
+    <input (change)="uploadFile($event)" multiple type="file" id="fileUpload">
+    <label #labelElement for="fileUpload">Kliknij tutaj, aby dodać pliki</label>
+</div>

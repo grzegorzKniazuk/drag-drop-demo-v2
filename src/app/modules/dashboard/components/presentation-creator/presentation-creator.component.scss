@@ -1,0 +1,14 @@
+@import "./src/assets/styles/base.scss";
+
+.presentation-container {
+    &.columns {
+        @include flex(flex, flex-start, flex-start, row);
+    }
+    &.no-slides {
+        @include flex(flex, center, center, column);
+    }
+    @include size(100%, 100%);
+    min-height: 100vh;
+    padding: 15px;
+    box-sizing: border-box;
+}

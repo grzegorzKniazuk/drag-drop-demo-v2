@@ -1,0 +1,14 @@
+@import "./src/assets/styles/base.scss";
+
+.no-slides-container {
+    @include flex(flex, center, center, column);
+    @include size(400px, 300px);
+    border: 1px dotted $secondary;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    input[type="file"] {
+        display: none;
+    }
+}

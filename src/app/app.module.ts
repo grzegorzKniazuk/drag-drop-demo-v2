@@ -8,6 +8,7 @@ import { baseReducers, metaReducers } from 'src/app/store/base.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         StoreModule.forRoot(baseReducers, { metaReducers }),
         EffectsModule.forRoot([ ]),
