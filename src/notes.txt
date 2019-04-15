@@ -1,0 +1,5 @@
+ng generate store AppState --root --module app.module.ts
+ng generate action auth/Auth
+ng generate reducer Auth --flat=false --module auth/auth.module.ts
+ng generate effect auth/Auth --module auth/auth.module.ts
+ng generate entity --name Lesson --module courses/courses.module.ts
