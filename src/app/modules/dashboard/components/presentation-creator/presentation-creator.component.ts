@@ -12,5 +12,4 @@ export class PresentationCreatorComponent implements OnInit {
 
     ngOnInit() {
     }
-
 }
