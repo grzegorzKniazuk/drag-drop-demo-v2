@@ -6,6 +6,7 @@ import * as fromPresentationCreator from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { SlideEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/slide.effects';
 import { ColumnEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/column.effects';
+import { SlideLibaryEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/slide-libary.effects';
 
 @NgModule({
     declarations: [
@@ -14,7 +15,7 @@ import { ColumnEffects } from 'src/app/modules/dashboard/components/presentation
     imports: [
         SharedModule,
         StoreModule.forFeature('presentationCreator', fromPresentationCreator.reducers, { metaReducers: fromPresentationCreator.metaReducers }),
-        EffectsModule.forFeature([ SlideEffects, ColumnEffects ]),
+        EffectsModule.forFeature([ SlideEffects, ColumnEffects, SlideLibaryEffects ]),
     ],
     exports: [
         PresentationCreatorComponent,

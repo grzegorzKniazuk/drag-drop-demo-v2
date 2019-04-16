@@ -14,10 +14,6 @@ export const initialSlideState: SlideState = slideAdapter.getInitialState({
 
 export function slideReducer(state = initialSlideState, action: SlideActions): SlideState {
     switch (action.type) {
-        case SlideActionTypes.AddSlide: {
-            return slideAdapter.addOne(action.payload.slide, state);
-        }
-
         case SlideActionTypes.UpsertSlide: {
             return slideAdapter.upsertOne(action.payload.slide, state);
         }
@@ -53,7 +49,9 @@ export function slideReducer(state = initialSlideState, action: SlideActions): S
         case SlideActionTypes.ClearSlides: {
             return slideAdapter.removeAll(state);
         }
-
+        case SlideActionTypes.MoveSlide: {
+            return state;
+        }
         default: {
             return state;
         }

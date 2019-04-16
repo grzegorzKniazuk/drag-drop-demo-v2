@@ -1,7 +1,8 @@
 import { SlideActions } from 'src/app/shared/interfaces/slide-actions';
 
 export interface Slide {
-    id: string;
+    id: number;
+    columnId: number;
     imageData: string | ArrayBuffer;
     actions: SlideActions[];
 }

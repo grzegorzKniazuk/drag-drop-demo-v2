@@ -2,19 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material.module';
 import { NoSlidesInPresentationComponent } from 'src/app/shared/components/no-slides-in-presentation/no-slides-in-presentation.component';
-import { NoSlidesInPresentationDirective } from 'src/app/shared/directives/no-slides-in-presentation.directive';
+import { SlidesLibaryBarComponent } from 'src/app/shared/components/slides-libary-bar/slides-libary-bar.component';
+import { ColumnsZoneComponent } from 'src/app/shared/components/columns-zone/columns-zone.component';
 
 const components = [
     NoSlidesInPresentationComponent,
+    SlidesLibaryBarComponent,
+    ColumnsZoneComponent,
 ];
 
-const entryConponents = [
-    NoSlidesInPresentationComponent,
-];
+const entryConponents = [];
 
-const directives = [
-    NoSlidesInPresentationDirective,
-];
+const directives = [];
 
 const modules = [
     CommonModule,

@@ -1,0 +1,8 @@
+@import "./src/assets/styles/base.scss";
+
+.slides-libary-container {
+    @include flex(flex, flex-start, flex-start, row);
+    @include size(100%, $slides-libary-bar-height);
+    min-width: 100vw;
+    background: #17a2b8;
+}

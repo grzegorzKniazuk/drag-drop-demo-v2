@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as columnEntitySelectors from '../reducers/column.reducer';
 import { PresentationCreatorState } from 'src/app/modules/dashboard/components/presentation-creator/store/index';
+import * as slidesLibaryEntitySelectors from 'src/app/modules/dashboard/components/presentation-creator/store/reducers/column.reducer';
 
 export const presentationCreatorState = createFeatureSelector<PresentationCreatorState>('presentationCreator');
 
@@ -14,7 +14,13 @@ export const slidesState = createSelector(
     state => state.columns,
 );
 
-export const columnsAmount = createSelector(
-    columnsState,
-    columnEntitySelectors.selectTotal,
+export const slidesLibaryState = createSelector(
+    presentationCreatorState,
+    state => state.slidesLibary,
 );
+
+export const amountOfSlidesInLibary = createSelector(
+    slidesLibaryState,
+    slidesLibaryEntitySelectors.selectTotal,
+);
+

@@ -1,0 +1,8 @@
+@import "./src/assets/styles/base.scss";
+
+.columns-zone-container {
+    @include flex(flex, flex-start, flex-start, row);
+    @include size(100%, calc(100% - 150px));
+    min-height: calc(100vh - 150px);
+    min-width: 100vw;
+}

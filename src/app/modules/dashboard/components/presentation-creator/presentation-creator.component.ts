@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { columnsAmount } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
+import { amountOfSlidesInLibary } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/presentation-creator.selectors';
 
 @AutoUnsubscribe()
 @Component({
@@ -13,10 +13,10 @@ import { AppState } from 'src/app/store';
 })
 export class PresentationCreatorComponent implements OnInit, OnDestroy {
 
-    public columnsAmount$: Observable<number>;
+    public slidesInLibaryAmount$: Observable<number>;
 
     constructor(
-        private store: Store<AppState>
+        private store: Store<AppState>,
     ) {
     }
 
@@ -28,6 +28,6 @@ export class PresentationCreatorComponent implements OnInit, OnDestroy {
     }
 
     private initColumnsAmount(): void {
-        this.columnsAmount$ = this.store.pipe(select(columnsAmount));
+        this.slidesInLibaryAmount$ = this.store.pipe(select(amountOfSlidesInLibary));
     }
 }

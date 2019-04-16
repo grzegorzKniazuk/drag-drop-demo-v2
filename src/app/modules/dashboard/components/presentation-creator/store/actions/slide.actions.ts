@@ -4,7 +4,6 @@ import { Slide } from 'src/app/shared/interfaces/slide';
 
 export enum SlideActionTypes {
     LoadSlides = '[Slide] Load Slides',
-    AddSlide = '[Slide] Add Slide',
     UpsertSlide = '[Slide] Upsert Slide',
     MoveSlide = '[Slide] Move Slide',
     AddSlides = '[Slide] Add Slides',
@@ -17,70 +16,63 @@ export enum SlideActionTypes {
 }
 
 export class LoadSlides implements Action {
-    readonly type = SlideActionTypes.LoadSlides;
+    public readonly type = SlideActionTypes.LoadSlides;
 
     constructor(public payload: { slides: Slide[] }) {
     }
 }
 
-export class AddSlide implements Action {
-    readonly type = SlideActionTypes.AddSlide;
-
-    constructor(public payload: { slide: Slide }) {
-    }
-}
-
 export class UpsertSlide implements Action {
-    readonly type = SlideActionTypes.UpsertSlide;
+    public readonly type = SlideActionTypes.UpsertSlide;
 
     constructor(public payload: { slide: Slide }) {
     }
 }
 
 export class AddSlides implements Action {
-    readonly type = SlideActionTypes.AddSlides;
+    public readonly type = SlideActionTypes.AddSlides;
 
     constructor(public payload: { slides: Slide[] }) {
     }
 }
 
 export class UpsertSlides implements Action {
-    readonly type = SlideActionTypes.UpsertSlides;
+    public readonly type = SlideActionTypes.UpsertSlides;
 
     constructor(public payload: { slides: Slide[] }) {
     }
 }
 
 export class UpdateSlide implements Action {
-    readonly type = SlideActionTypes.UpdateSlide;
+    public readonly type = SlideActionTypes.UpdateSlide;
 
     constructor(public payload: { slide: Update<Slide> }) {
     }
 }
 
 export class UpdateSlides implements Action {
-    readonly type = SlideActionTypes.UpdateSlides;
+    public readonly type = SlideActionTypes.UpdateSlides;
 
     constructor(public payload: { slides: Update<Slide>[] }) {
     }
 }
 
 export class DeleteSlide implements Action {
-    readonly type = SlideActionTypes.DeleteSlide;
+    public readonly type = SlideActionTypes.DeleteSlide;
 
     constructor(public payload: { id: string }) {
     }
 }
 
 export class DeleteSlides implements Action {
-    readonly type = SlideActionTypes.DeleteSlides;
+    public readonly type = SlideActionTypes.DeleteSlides;
 
     constructor(public payload: { ids: string[] }) {
     }
 }
 
 export class ClearSlides implements Action {
-    readonly type = SlideActionTypes.ClearSlides;
+    public readonly type = SlideActionTypes.ClearSlides;
 }
 
 export class MoveSlide implements Action {
@@ -89,7 +81,6 @@ export class MoveSlide implements Action {
 
 export type SlideActions =
     LoadSlides
-    | AddSlide
     | UpsertSlide
     | AddSlides
     | UpsertSlides
