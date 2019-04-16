@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
-import { amountOfSlidesInLibary } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/presentation-creator.selectors';
+import { amountOfSlidesInLibary } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 
 @AutoUnsubscribe()
 @Component({

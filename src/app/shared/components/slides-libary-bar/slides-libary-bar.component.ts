@@ -1,4 +1,9 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { AppState } from 'src/app/store';
+import { Observable } from 'rxjs';
+import { Slide } from 'src/app/shared/interfaces/slide';
+import { slidesLibaryEntities } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 
 @Component({
     selector: 'dd-slides-libary-bar',
@@ -7,12 +12,17 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 })
 export class SlidesLibaryBarComponent implements OnInit {
 
-    @ViewChild('slidesLibaryContainer', { read: ViewContainerRef }) private slidesLibaryContainer: ViewContainerRef;
+    public slidesInLibaryEntities$: Observable<Slide[]>;
 
-    constructor() {
+    constructor(private store: Store<AppState>) {
     }
 
     ngOnInit() {
+        this.initSlidesInLibaryEntities();
+    }
+
+    private initSlidesInLibaryEntities(): void {
+        this.slidesInLibaryEntities$ = this.store.pipe(select(slidesLibaryEntities));
     }
 
 }

@@ -6,8 +6,6 @@ import { Actions } from '@ngrx/effects';
 })
 export class SlideLibaryEffects {
 
-
-
     constructor(private actions$: Actions) {
     }
 }

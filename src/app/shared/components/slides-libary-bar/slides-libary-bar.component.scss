@@ -1,8 +1,15 @@
 @import "./src/assets/styles/base.scss";
 
 .slides-libary-container {
-    @include flex(flex, flex-start, flex-start, row);
+    @include flex(flex, flex-start, center, row, relative);
     @include size(100%, $slides-libary-bar-height);
     min-width: 100vw;
-    background: #17a2b8;
+    padding: 0 15px;
+    border-top: 2px dotted $secondary;
+
+    .caption {
+        position: absolute;
+        left: 0;
+        top: -30px;
+    }
 }

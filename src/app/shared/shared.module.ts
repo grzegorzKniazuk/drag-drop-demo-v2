@@ -4,11 +4,13 @@ import { MaterialModule } from 'src/app/shared/material.module';
 import { NoSlidesInPresentationComponent } from 'src/app/shared/components/no-slides-in-presentation/no-slides-in-presentation.component';
 import { SlidesLibaryBarComponent } from 'src/app/shared/components/slides-libary-bar/slides-libary-bar.component';
 import { ColumnsZoneComponent } from 'src/app/shared/components/columns-zone/columns-zone.component';
+import { SlideThumbnailComponent } from 'src/app/shared/components/slide-thumbnail/slide-thumbnail.component';
 
 const components = [
     NoSlidesInPresentationComponent,
     SlidesLibaryBarComponent,
     ColumnsZoneComponent,
+    SlideThumbnailComponent,
 ];
 
 const entryConponents = [];

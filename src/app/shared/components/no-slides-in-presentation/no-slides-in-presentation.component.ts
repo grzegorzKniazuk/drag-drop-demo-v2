@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
-import { AddSlides } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide.actions';
 import { Slide } from 'src/app/shared/interfaces/slide';
+import { AddSlides } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @Component({
     selector: 'dd-no-slides-in-presentation',
@@ -67,6 +67,6 @@ export class NoSlidesInPresentationComponent {
                     alert('Wrzuć JPG/PNG');
                 }
             }
-        }))
+        }));
     }
 }

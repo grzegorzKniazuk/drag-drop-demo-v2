@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {  AddSlides, SlideActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide.actions';
+import { AddSlides, SlideActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide.actions';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class SlideEffects {
         ofType<AddSlides>(SlideActionTypes.AddSlides),
         map((action: AddSlides) => {
 
-        })
+        }),
     );
 
     constructor(private actions$: Actions) {

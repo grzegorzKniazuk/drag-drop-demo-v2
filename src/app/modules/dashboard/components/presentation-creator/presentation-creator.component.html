@@ -1,10 +1,10 @@
-<div class="presentation-container" [ngClass]="(slidesInLibaryAmount$ | async) ? 'columns' : 'no-slides'">
+<div [ngClass]="(slidesInLibaryAmount$ | async) ? 'columns' : 'no-slides'" class="presentation-container">
 
     <ng-container *ngIf="!(slidesInLibaryAmount$ | async)">
         <dd-no-slides-in-presentation></dd-no-slides-in-presentation>
     </ng-container>
 
-    <ng-container  *ngIf="(slidesInLibaryAmount$ | async)">
+    <ng-container *ngIf="(slidesInLibaryAmount$ | async)">
         <dd-columns-zone></dd-columns-zone>
         <dd-slides-libary-bar></dd-slides-libary-bar>
     </ng-container>

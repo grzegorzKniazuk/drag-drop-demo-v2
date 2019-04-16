@@ -6,6 +6,7 @@
     &.columns {
         @include flex(flex, flex-start, flex-start, column);
     }
+
     &.no-slides {
         @include flex(flex, center, center, column);
     }

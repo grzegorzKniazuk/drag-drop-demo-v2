@@ -1,3 +1,4 @@
 <div class="slides-libary-container">
-    <ng-container #slidesLibaryContainer></ng-container>
+    <div class="caption">Biblioteka użytkownika</div>
+    <dd-slide-thumbnail *ngFor="let slide of (slidesInLibaryEntities$ | async)" [slide]="slide"></dd-slide-thumbnail>
 </div>

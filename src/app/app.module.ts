@@ -6,7 +6,7 @@ import 'hammerjs';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { reducers, metaReducers } from './store';
+import { metaReducers, reducers } from './store';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 
