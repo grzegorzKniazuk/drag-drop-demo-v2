@@ -1,3 +1,5 @@
-<div class="columns-zone-container">
-    columns-zone-container
+<div class="columns-zone-container" [ngClass]="(amountOfPresentationColumns$ | async) ? 'columns' : 'no-columns' ">
+    <strong class="no-columns-container" *ngIf="!(amountOfPresentationColumns$ | async)">
+        Przeciągnij tutaj slajdy z bilbioteki aby dodać nową sekcję w prezentacji
+    </strong>
 </div>

@@ -16,4 +16,7 @@ export class SlideThumbnailComponent implements OnInit {
     ngOnInit() {
     }
 
+    public dragStart(event: DragEvent, slideId: number): void {
+        event.dataTransfer.setData('string', `${slideId}`);
+    }
 }
