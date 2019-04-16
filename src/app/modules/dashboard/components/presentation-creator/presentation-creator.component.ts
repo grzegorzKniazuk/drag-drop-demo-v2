@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AppState } from 'src/app/store/base.reducers';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { columnsAmount } from 'src/app/store/selectors/columns.selectors';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { columnsAmount } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,7 +16,7 @@ export class PresentationCreatorComponent implements OnInit, OnDestroy {
     public columnsAmount$: Observable<number>;
 
     constructor(
-        private store: Store<AppState>,
+        private store: Store<AppState>
     ) {
     }
 

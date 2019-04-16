@@ -4,11 +4,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import 'hammerjs';
 import { StoreModule } from '@ngrx/store';
-import { baseReducers, metaReducers } from 'src/app/store/base.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
-import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { reducers, metaReducers } from './store';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
     declarations: [
@@ -18,8 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
-        StoreModule.forRoot(baseReducers, { metaReducers }),
-        EffectsModule.forRoot([ ]),
+        StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot([]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [],

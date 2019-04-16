@@ -1,8 +1,8 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Directive, OnInit, ViewContainerRef } from '@angular/core';
 import { NoSlidesInPresentationComponent } from 'src/app/shared/components/no-slides-in-presentation/no-slides-in-presentation.component';
 import { select, Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/base.reducers';
-import { columnsAmount } from 'src/app/store/selectors/columns.selectors';
+import { AppState } from 'src/app/store';
+import { columnsAmount } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 
 @Directive({
     selector: '[ddNoSlidesInPresentation]',
@@ -14,8 +14,8 @@ export class NoSlidesInPresentationDirective implements OnInit {
 
     constructor(
         private viewContainerRef: ViewContainerRef,
-        private store: Store<AppState>,
         private componentFactoryResolver: ComponentFactoryResolver,
+        private store: Store<AppState>
     ) {
     }
 
