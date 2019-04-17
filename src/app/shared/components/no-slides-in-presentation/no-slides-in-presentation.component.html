@@ -1,5 +1,5 @@
-<div (click)="clickIntoLabel()" class="no-slides-container">
+<div (click)="clickIntoFileInput()" class="no-slides-container">
     <span>Brak slajdów</span>
-    <input (change)="uploadFile($event)" id="fileUpload" multiple type="file">
-    <label #labelElement for="fileUpload">Kliknij tutaj, aby dodać pliki</label>
+    <input #fileInputElement (change)="uploadFiles($event)" id="fileUpload" multiple type="file">
+    <label for="fileUpload">Kliknij tutaj, aby dodać pliki</label>
 </div>

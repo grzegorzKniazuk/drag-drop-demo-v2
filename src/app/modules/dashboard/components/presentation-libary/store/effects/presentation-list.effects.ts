@@ -4,22 +4,29 @@ import { AddPresentation, PresentationListActionsTypes } from '../actions/presen
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../../../store';
+import { AddSlides } from '../../../presentation-creator/store/actions/slide.actions';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PresentationListEffects {
 
-    @Effect({ dispatch: false })
-    public addPresentation$: Observable<boolean> = this.actions$.pipe(
+    @Effect({ dispatch: true })
+    public addPresentation$: Observable<void> = this.actions$.pipe(
         ofType<AddPresentation>(PresentationListActionsTypes.AddPresentation),
-        switchMap(() => {
-             return this.router.navigateByUrl('/dashboard/presentation-creator');
+        switchMap((action: AddPresentation) => {
+             return this.router.navigateByUrl('/dashboard/presentation-creator').then(() => {
+                 return this.store.dispatch(new AddSlides({ slides: action.payload.presentation.slides }));
+             });
         }),
     );
 
     constructor(
         private actions$: Actions,
-        private router: Router) {
+        private store: Store<AppState>,
+        private router: Router,
+    ) {
     }
 }
