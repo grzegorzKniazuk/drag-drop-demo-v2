@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PresentationCreatorState } from 'src/app/modules/dashboard/components/presentation-creator/store/index';
+import { PresentationCreatorState } from '../index';
 
 export const presentationCreatorState = createFeatureSelector<PresentationCreatorState>('presentationCreator');
 
