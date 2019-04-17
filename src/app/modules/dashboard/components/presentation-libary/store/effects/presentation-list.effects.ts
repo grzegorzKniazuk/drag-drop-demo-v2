@@ -13,7 +13,7 @@ import { AddSlides } from '../../../presentation-creator/store/actions/slide.act
 })
 export class PresentationListEffects {
 
-    @Effect({ dispatch: true })
+    @Effect({ dispatch: false })
     public addPresentation$: Observable<void> = this.actions$.pipe(
         ofType<AddPresentation>(PresentationListActionsTypes.AddPresentation),
         switchMap((action: AddPresentation) => {

@@ -9,6 +9,7 @@ import { NoPresentationsComponent } from './components/no-presentations/no-prese
 import { PresentationThumbnailComponent } from './components/presentation-thumbnail/presentation-thumbnail.component';
 import { PresentationTitleComponent } from './components/presentation-title/presentation-title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ColumnsDividerComponent } from './components/columns-divider/columns-divider.component';
 
 const components = [
     NoSlidesInPresentationComponent,
@@ -18,6 +19,7 @@ const components = [
     NoPresentationsComponent,
     PresentationThumbnailComponent,
     PresentationTitleComponent,
+    ColumnsDividerComponent,
 ];
 
 const entryConponents = [

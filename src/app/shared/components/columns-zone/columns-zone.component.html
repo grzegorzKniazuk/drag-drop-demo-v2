@@ -1,4 +1,7 @@
-<div class="columns-zone-container" [ngClass]="(amountOfPresentationColumns$ | async) ? 'columns' : 'no-columns' ">
+<div class="columns-zone-container"
+     [ngClass]="(amountOfPresentationColumns$ | async) ? 'columns' : 'no-columns' "
+     (drop)="addSectionOnDrop($event)"
+     (dragover)="allowDrop($event)">
     <strong class="no-columns-container" *ngIf="!(amountOfPresentationColumns$ | async)">
         Przeciągnij tutaj slajdy z bilbioteki aby dodać nową sekcję w prezentacji
     </strong>
