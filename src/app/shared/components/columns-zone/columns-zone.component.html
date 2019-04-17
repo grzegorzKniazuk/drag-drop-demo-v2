@@ -5,4 +5,10 @@
     <strong class="no-columns-container" *ngIf="!(amountOfPresentationColumns$ | async)">
         Przeciągnij tutaj slajdy z bilbioteki aby dodać nową sekcję w prezentacji
     </strong>
+    <ng-container *ngIf="(amountOfPresentationColumns$ | async)">
+        <ng-container *ngFor="let column of (columnsEntities$ | async)">
+            <dd-column [id]="column.id" [title]="column.title" [slides]="column.slides"></dd-column>
+            <dd-columns-divider></dd-columns-divider>
+        </ng-container>
+    </ng-container>
 </div>

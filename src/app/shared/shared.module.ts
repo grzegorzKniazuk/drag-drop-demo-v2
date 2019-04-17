@@ -10,6 +10,8 @@ import { PresentationThumbnailComponent } from './components/presentation-thumbn
 import { PresentationTitleComponent } from './components/presentation-title/presentation-title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ColumnsDividerComponent } from './components/columns-divider/columns-divider.component';
+import { ColumnTitleComponent } from './components/column-title/column-title.component';
+import { ColumnComponent } from './components/column/column.component';
 
 const components = [
     NoSlidesInPresentationComponent,
@@ -20,10 +22,13 @@ const components = [
     PresentationThumbnailComponent,
     PresentationTitleComponent,
     ColumnsDividerComponent,
+    ColumnTitleComponent,
+    ColumnComponent,
 ];
 
 const entryConponents = [
     PresentationTitleComponent,
+    ColumnTitleComponent,
 ];
 
 const directives = [];

@@ -26,6 +26,9 @@ export function slideLibaryReducer(state = initialSlideLibaryState, action: Slid
         case SlideLibaryActionsTypes.DeleteSlide: {
             return slideLibaryAdapter.removeOne(action.payload.id, state);
         }
+        case SlideLibaryActionsTypes.DeleteSlides: {
+            return slideLibaryAdapter.removeMany(action.payload.ids, state);
+        }
         case SlideLibaryActionsTypes.MoveSlide: {
             return state;
         }

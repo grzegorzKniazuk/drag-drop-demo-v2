@@ -1,7 +1,7 @@
-import { Slide } from 'src/app/shared/interfaces/slide';
+import { Column } from './column';
 
 export interface Presentation {
     id: number;
     title: string;
-    slides: Slide[];
+    columns: Column[];
 }

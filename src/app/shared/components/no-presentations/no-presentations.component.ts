@@ -32,7 +32,7 @@ export class NoPresentationsComponent {
                 presentation: {
                     id: 0,
                     title: presentationTitle,
-                    slides: [],
+                    columns: [],
                 },
             }));
         });

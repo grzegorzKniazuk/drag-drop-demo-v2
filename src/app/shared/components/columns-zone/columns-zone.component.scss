@@ -4,6 +4,7 @@
     @include size(100%, calc(100% - 150px));
     min-height: calc(100vh - 150px);
     min-width: 100vw;
+    padding: 15px;
 
     &.columns {
         @include flex(flex, flex-start, flex-start, row);

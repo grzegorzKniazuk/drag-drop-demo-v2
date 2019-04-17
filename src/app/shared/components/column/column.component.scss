@@ -1,0 +1,14 @@
+@import "./src/assets/styles/base.scss";
+
+.column-container {
+    @include flex(flex, flex-start, center, column);
+    @include size(200px);
+
+    .title-container {
+        width: 100%;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}

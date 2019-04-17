@@ -6,6 +6,7 @@ export enum SlideLibaryActionsTypes {
     MoveSlide = '[SlideLibary] Move Slide',
     DeleteSlide = '[SlideLibary] Delete Slide',
     AddSlides = '[SlideLibary] Add Slides',
+    DeleteSlides = '[SlideLibary] Delete Slides',
 }
 
 export class AddSlide implements Action {
@@ -33,4 +34,11 @@ export class AddSlides implements Action {
     }
 }
 
-export type SlideLibaryActions = AddSlide | MoveSlide | DeleteSlide | AddSlides;
+export class DeleteSlides implements Action {
+    public readonly type = SlideLibaryActionsTypes.DeleteSlides;
+
+    constructor(public payload: { ids: number[] }) {
+    }
+}
+
+export type SlideLibaryActions = AddSlide | MoveSlide | DeleteSlide | AddSlides | DeleteSlides;

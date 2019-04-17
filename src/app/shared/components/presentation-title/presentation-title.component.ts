@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { Title } from '../../models/title';
 
 @Component({
     selector: 'dd-presentation-title',
@@ -7,15 +8,13 @@ import { MatDialogRef } from '@angular/material';
     styleUrls: [ './presentation-title.component.scss' ],
     changeDetection: ChangeDetectionStrategy.Default,
 })
-export class PresentationTitleComponent {
+export class PresentationTitleComponent extends Title<PresentationTitleComponent> {
 
     public presentationTitle: string;
 
     constructor(
-        private matDialogRef: MatDialogRef<PresentationTitleComponent>,
+        matDialogRef: MatDialogRef<PresentationTitleComponent>,
     ) {
-    }
-    public cancel(): void {
-        this.matDialogRef.close();
+        super(matDialogRef);
     }
 }

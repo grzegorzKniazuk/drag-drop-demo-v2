@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../../store';
-import { AddSlides } from '../../../presentation-creator/store/actions/slide.actions';
+import { AddColumns } from '../../../presentation-creator/store/actions/column.actions';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +18,7 @@ export class PresentationListEffects {
         ofType<AddPresentation>(PresentationListActionsTypes.AddPresentation),
         switchMap((action: AddPresentation) => {
              return this.router.navigateByUrl('/dashboard/presentation-creator').then(() => {
-                 return this.store.dispatch(new AddSlides({ slides: action.payload.presentation.slides }));
+                 return this.store.dispatch(new AddColumns({ columns: action.payload.presentation.columns }));
              });
         }),
     );

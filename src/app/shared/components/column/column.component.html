@@ -1,0 +1,11 @@
+<div class="column-container">
+    <div class="title-container">
+        <mat-form-field>
+            <input matInput [(ngModel)]="title" placeholder="Tytuł sekcji">
+        </mat-form-field>
+    </div>
+    <div class="thumbnails-container">
+        <dd-slide-thumbnail *ngFor="let slide of slides" [slide]="slide"></dd-slide-thumbnail>
+    </div>
+</div>
+

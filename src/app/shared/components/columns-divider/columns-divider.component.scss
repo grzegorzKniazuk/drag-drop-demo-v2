@@ -1,0 +1,7 @@
+@import "./src/assets/styles/base.scss";
+
+.column-divider {
+    @include flex(flex);
+    @include size(30px, calc(100% - 150px));
+    background: #007bff;
+}

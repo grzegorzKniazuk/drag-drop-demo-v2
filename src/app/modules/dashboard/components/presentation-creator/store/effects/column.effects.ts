@@ -1,29 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AddColumn, AddColumns, ColumnActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
-import { tap } from 'rxjs/operators';
+import { AddColumn, ColumnActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../../../store';
+import { Slide } from '../../../../../../shared/interfaces/slide';
+import { DeleteSlides } from '../actions/slide-libary.actions';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ColumnEffects {
 
-    @Effect()
-    public addColumn$ = this.actions$.pipe(
+    @Effect({ dispatch: false })
+    public addColumn$: Observable<void> = this.actions$.pipe(
         ofType<AddColumn>(ColumnActionTypes.AddColumn),
-        tap(() => {
+        map((action: AddColumn) => {
+            const ids = action.payload.column.slides.map((slide: Slide) => {
+                return slide.id;
+            });
 
+            if (ids.length) {
+                this.store.dispatch(new DeleteSlides({ ids }));
+            }
         }),
     );
 
-    public addColumns$ = this.actions$.pipe(
-        ofType<AddColumns>(ColumnActionTypes.AddColumns),
-        tap(() => {
-
-        }),
-    );
-
-    constructor(private actions$: Actions) {
+    constructor(
+        private actions$: Actions,
+        private store: Store<AppState>,
+    ) {
     }
 
 }

@@ -60,14 +60,14 @@ export class UpdateSlides implements Action {
 export class DeleteSlide implements Action {
     public readonly type = SlideActionTypes.DeleteSlide;
 
-    constructor(public payload: { id: string }) {
+    constructor(public payload: { id: number }) {
     }
 }
 
 export class DeleteSlides implements Action {
     public readonly type = SlideActionTypes.DeleteSlides;
 
-    constructor(public payload: { ids: string[] }) {
+    constructor(public payload: { ids: number[] }) {
     }
 }
 
