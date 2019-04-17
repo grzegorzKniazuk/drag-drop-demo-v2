@@ -22,7 +22,7 @@ export class MoveSlide implements Action {
 export class DeleteSlide implements Action {
     public readonly type = SlideLibaryActionsTypes.DeleteSlide;
 
-    constructor(public payload: { id: string }) {
+    constructor(public payload: { id: number }) {
     }
 }
 
