@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../../../../store';
+import { Observable } from 'rxjs';
+import { amountOfPresentationsInLibary } from './store/selectors/presentation-list.selectors';
 
 @Component({
     selector: 'dd-presentation-libary',
@@ -7,10 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PresentationLibaryComponent implements OnInit {
 
-    constructor() {
+    public amountOfPresentationsInLibary$: Observable<number>;
+
+    constructor(
+        private store: Store<AppState>
+    ) {
     }
 
     ngOnInit() {
+        this.initAmountOfPresentationsInLibary();
     }
 
+    private initAmountOfPresentationsInLibary(): void {
+        this.amountOfPresentationsInLibary$ = this.store.pipe(select(amountOfPresentationsInLibary));
+    }
 }

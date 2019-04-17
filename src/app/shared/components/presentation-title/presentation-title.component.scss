@@ -1,0 +1,9 @@
+@import "./src/assets/styles/base.scss";
+
+mat-form-field {
+    width: 100%;
+}
+
+.mat-dialog-actions {
+    @include flex(flex, center, center, row);
+}

@@ -5,21 +5,32 @@ import { NoSlidesInPresentationComponent } from 'src/app/shared/components/no-sl
 import { SlidesLibaryBarComponent } from 'src/app/shared/components/slides-libary-bar/slides-libary-bar.component';
 import { ColumnsZoneComponent } from 'src/app/shared/components/columns-zone/columns-zone.component';
 import { SlideThumbnailComponent } from 'src/app/shared/components/slide-thumbnail/slide-thumbnail.component';
+import { NoPresentationsComponent } from './components/no-presentations/no-presentations.component';
+import { PresentationThumbnailComponent } from './components/presentation-thumbnail/presentation-thumbnail.component';
+import { PresentationTitleComponent } from './components/presentation-title/presentation-title.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const components = [
     NoSlidesInPresentationComponent,
     SlidesLibaryBarComponent,
     ColumnsZoneComponent,
     SlideThumbnailComponent,
+    NoPresentationsComponent,
+    PresentationThumbnailComponent,
+    PresentationTitleComponent,
 ];
 
-const entryConponents = [];
+const entryConponents = [
+    PresentationTitleComponent,
+];
 
 const directives = [];
 
 const modules = [
     CommonModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
 ];
 
 @NgModule({
