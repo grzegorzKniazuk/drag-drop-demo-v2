@@ -3,8 +3,7 @@ import { PresentationCreatorComponent } from 'src/app/modules/dashboard/componen
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromPresentationCreator from './store';
-import { EffectsModule } from '@ngrx/effects';
-import { SlideEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/slide.effects';
+import { EffectsModule } from '@ngrx/effects'
 import { ColumnEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/column.effects';
 import { SlideLibaryEffects } from 'src/app/modules/dashboard/components/presentation-creator/store/effects/slide-libary.effects';
 
@@ -15,7 +14,7 @@ import { SlideLibaryEffects } from 'src/app/modules/dashboard/components/present
     imports: [
         SharedModule,
         StoreModule.forFeature('presentationCreator', fromPresentationCreator.reducers, { metaReducers: fromPresentationCreator.metaReducers }),
-        EffectsModule.forFeature([ SlideEffects, ColumnEffects, SlideLibaryEffects ]),
+        EffectsModule.forFeature([ ColumnEffects, SlideLibaryEffects ]),
     ],
     exports: [
         PresentationCreatorComponent,
