@@ -1,8 +1,8 @@
 <div class="slides-libary-container">
-    <div class="caption">Biblioteka użytkownika<mat-icon (click)="clickIntoFileInput()">add</mat-icon></div>
+    <div class="caption">Nierozmieszczone slajdy<mat-icon (click)="clickIntoFileInput()">add</mat-icon></div>
     <input #fileInputElement (change)="uploadFiles($event)" id="fileUpload" multiple type="file" hidden>
     <ng-container *ngFor="let slide of (slidesInLibaryEntities$ | async)">
         <dd-slide-thumbnail [slide]="slide"></dd-slide-thumbnail>
-        <dd-columns-divider [isDropZone]="false"></dd-columns-divider>
+        <dd-libary-columns-divider></dd-libary-columns-divider>
     </ng-container>
 </div>

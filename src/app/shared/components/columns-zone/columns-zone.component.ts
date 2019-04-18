@@ -43,6 +43,8 @@ export class ColumnsZoneComponent extends Droppable implements OnInit {
     }
 
     private addSectionOnDrop(event: DragEvent): void {
+        event.stopPropagation();
+
         const droppedSlideId = +event.dataTransfer.getData('string');
 
         this.matDialog.open(ColumnTitleComponent, {

@@ -2,7 +2,6 @@
 
 .column-divider {
     @include flex(flex);
-    @include size(30px, 100%);
-    min-height: calc(100vh - 180px);
+    @include size(30px, 114px);
     background: #007bff;
 }

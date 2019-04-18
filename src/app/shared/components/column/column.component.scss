@@ -2,7 +2,9 @@
 
 .column-container {
     @include flex(flex, flex-start, center, column);
-    @include size(200px);
+    @include size(200px, 100%);
+    min-height: calc(100vh - 180px);
+    background: #28a745;
 
     .title-container {
         width: 100%;

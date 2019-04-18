@@ -3,12 +3,12 @@
      (drop)="addSectionOnDrop($event)"
      (dragover)="allowDrop($event)">
     <strong class="no-columns-container" *ngIf="!(amountOfPresentationColumns$ | async)">
-        Przeciągnij tutaj slajdy z bilbioteki aby dodać nową sekcję w prezentacji
+        Przeciągnij tutaj slajdy aby dodać nową sekcję w prezentacji
     </strong>
-    <ng-container *ngIf="(amountOfPresentationColumns$ | async)">
-        <ng-container *ngFor="let column of (columnsEntities$ | async)">
+    <ng-container *ngIf="(amountOfPresentationColumns$ | async) as amountOfPresentationColumns">
+        <ng-container *ngFor="let column of (columnsEntities$ | async); let i = index">
             <dd-column [id]="column.id" [title]="column.title" [slides]="column.slides"></dd-column>
-            <dd-columns-divider [isDropZone]="true"></dd-columns-divider>
-        </ng-container>
+            <dd-columns-divider *ngIf="amountOfPresentationColumns !== i + 1" [dividerSibilings]="{ leftSideElementId: column.id, rightSideElementId: column.id + 1 }"></dd-columns-divider>
+    </ng-container>
     </ng-container>
 </div>

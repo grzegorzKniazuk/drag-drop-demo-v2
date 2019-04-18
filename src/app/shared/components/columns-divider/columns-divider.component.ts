@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DividerSiblings } from '../../interfaces/divider-siblings';
 
 @Component({
     selector: 'dd-columns-divider',
@@ -7,12 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ColumnsDividerComponent implements OnInit {
 
-    @Input() public isDropZone: boolean;
+    @Input() public dividerSibilings: DividerSiblings;
 
     constructor() {
     }
 
     ngOnInit() {
+        console.log(this.dividerSibilings);
     }
 
 }
