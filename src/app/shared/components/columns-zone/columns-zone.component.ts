@@ -52,12 +52,12 @@ export class ColumnsZoneComponent extends Droppable implements OnInit {
             first(),
             filter((columnTitle: string) => !!columnTitle),
             withLatestFrom(this.store.pipe(select(selectSlideById(droppedSlideId))), this.store.pipe(select(amountOfPresentationColumns))),
-        ).subscribe(([ columnTitle, slide, numberOfColumns ]: [ string, Slide, number ]) => {
+        ).subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
             this.store.dispatch(new AddColumn({
                 column: {
                     id: numberOfColumns,
                     title: columnTitle,
-                    slides: [ slide ],
+                    slides: [ droppedSlide ],
                 },
             }));
         })

@@ -2,7 +2,6 @@
 
 .slide-container {
     @include flex(flex, center, center, row);
-    margin-right: 15px;
 
     img {
         @include size(200px);
