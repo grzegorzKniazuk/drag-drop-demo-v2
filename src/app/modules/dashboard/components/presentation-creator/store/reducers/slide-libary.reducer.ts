@@ -17,10 +17,10 @@ export const initialSlideLibaryState: SlideLibaryState = slideLibaryAdapter.getI
 
 export function slideLibaryReducer(state = initialSlideLibaryState, action: SlideLibaryActions): SlideLibaryState {
     switch (action.type) {
-        case SlideLibaryActionsTypes.AddSlides: {
+        case SlideLibaryActionsTypes.AddSlidesToLibary: {
             return slideLibaryAdapter.addMany(action.payload.slides, state);
         }
-        case SlideLibaryActionsTypes.DeleteSlides: {
+        case SlideLibaryActionsTypes.DeleteSlidesFromLibary: {
             return slideLibaryAdapter.removeMany(action.payload.ids, state);
         }
         default: {

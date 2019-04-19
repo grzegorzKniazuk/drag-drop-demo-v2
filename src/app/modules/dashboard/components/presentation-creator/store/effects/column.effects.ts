@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../../store';
 import { Slide } from '../../../../../../shared/interfaces/slide';
-import { DeleteSlides } from '../actions/slide-libary.actions';
+import { DeleteSlidesFromLibary } from '../actions/slide-libary.actions';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class ColumnEffects {
             });
 
             if (ids.length) {
-                this.store.dispatch(new DeleteSlides({ ids }));
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids }));
             }
         }),
     );

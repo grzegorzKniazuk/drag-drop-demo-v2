@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Slide } from '../interfaces/slide';
-import { AddSlides } from '../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { AddSlidesToLibary } from '../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 export abstract class FileUploader {
 
@@ -21,7 +21,7 @@ export abstract class FileUploader {
         this.files = event.target.files || event.dataTransfer.files;
 
         this.prepareSlides().then((slides: Slide[]) => {
-            this.store.dispatch(new AddSlides({ slides }));
+            this.store.dispatch(new AddSlidesToLibary({ slides }));
         }).finally(() => {
             this.slides = [];
         });
