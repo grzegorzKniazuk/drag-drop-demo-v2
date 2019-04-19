@@ -8,11 +8,6 @@ export const columnsState = createSelector(
     state => state.columns,
 );
 
-export const slidesState = createSelector(
-    presentationCreatorState,
-    state => state.columns,
-);
-
 export const slidesLibaryState = createSelector(
     presentationCreatorState,
     state => state.slidesLibary,

@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
-import { amountOfPresentationColumns, selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { amountOfPresentationColumns, selectColumnByID, selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Droppable } from '../../models/droppable';
 import { filter, first, withLatestFrom } from 'rxjs/operators';
-import { AddColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { AddColumn, UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { MatDialog } from '@angular/material';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { Column } from '../../interfaces/column';
@@ -25,7 +25,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
 
     public amountOfPresentationColumns$: Observable<number>;
     public columnsEntities$: Observable<Column[]>;
-    private slideMove: SlideMove;
+    private slideMove: SlideMove; // columnID, slideID
 
     constructor(
         private matDialog: MatDialog,
@@ -54,26 +54,68 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
         event.stopImmediatePropagation();
 
         this.slideMove = JSON.parse(event.dataTransfer.getData('string'));
+        console.log(this.slideMove);
+        if (this.slideMove.columnID === undefined && this.slideMove.slideID) { // jesli drag n drop z biblioteki
+            this.matDialog.open(ColumnTitleComponent, {
+                disableClose: true,
+                hasBackdrop: true,
+            }).afterClosed().pipe(
+                filter((columnTitle: string) => !!columnTitle),
+                first(),
+                withLatestFrom(
+                    this.store.pipe(select(selectSlideFromLibaryById(this.slideMove.slideID))),
+                    this.store.pipe(select(amountOfPresentationColumns)),
+                ))
+            .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
 
-        this.matDialog.open(ColumnTitleComponent, {
-            disableClose: true,
-            hasBackdrop: true,
-        }).afterClosed().pipe(
-            filter((columnTitle: string) => !!columnTitle),
-            first(),
-            withLatestFrom(
-                this.store.pipe(select(selectSlideFromLibaryById(this.slideMove.slideID))),
-                this.store.pipe(select(amountOfPresentationColumns)),
-            ))
-        .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
-            this.store.dispatch(new AddColumn({
-                column: {
-                    id: numberOfColumns,
-                    title: columnTitle,
-                    slides: [ droppedSlide ],
-                },
-            }));
-            this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slideMove.slideID ] }));
-        });
+                // dodaj element w nowej kolumnie
+                this.store.dispatch(new AddColumn({
+                    column: {
+                        id: numberOfColumns,
+                        title: columnTitle,
+                        slides: [ droppedSlide ],
+                    },
+                }));
+
+                // usun element z biblioteki
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slideMove.slideID ] }));
+            });
+        } else if (this.slideMove.columnID >= 0 && this.slideMove.slideID) { // jesli drag n drop z innej kolumny
+            console.log(this.slideMove);
+            this.matDialog.open(ColumnTitleComponent, {
+                disableClose: true,
+                hasBackdrop: true,
+            }).afterClosed().pipe(
+                filter((columnTitle: string) => !!columnTitle),
+                first(),
+                withLatestFrom(
+                    this.store.pipe(select(selectColumnByID(this.slideMove.columnID))),
+                    this.store.pipe(select(amountOfPresentationColumns)),
+                ),
+            ).subscribe(([ columnTitle, startedColumn, numberOfColumns ]: [ string, Column, number ]) => {
+                // dodaj element w nowej kolumnie
+                this.store.dispatch(new AddColumn({
+                    column: {
+                        id: numberOfColumns,
+                        title: columnTitle,
+                        slides: [ startedColumn.slides.find((slide: Slide) => {
+                            return slide.id === this.slideMove.slideID;
+                        }) ],
+                    },
+                }));
+
+                // usun element z  poprzedniej kolumny
+                this.store.dispatch(new UpdateColumn({
+                    column: {
+                        id: this.slideMove.columnID,
+                        changes: {
+                            slides: startedColumn.slides.filter((slide: Slide) => {
+                                return slide.id !== this.slideMove.slideID;
+                            }),
+                        },
+                    },
+                }));
+            });
+        }
     }
 }
