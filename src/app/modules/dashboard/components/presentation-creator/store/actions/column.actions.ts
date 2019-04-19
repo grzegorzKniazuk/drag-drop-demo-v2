@@ -50,14 +50,14 @@ export class DeleteColumn implements Action {
 export class MoveSlideStart implements Action {
     public readonly type = ColumnActionTypes.MoveSlideStart;
 
-    constructor(payload: { columnID: number, slideID: number }) {
+    constructor(public payload: { columnID: number, slideID: number }) {
     }
 }
 
 export class MoveSlideEnd implements Action {
     public readonly type = ColumnActionTypes.MoveSlideEnd;
 
-    constructor(payload: { columnID: number, slideID: number }) {
+    constructor(public payload: { columnID: number, slideID: number, dropOnDivider: boolean }) {
     }
 }
 

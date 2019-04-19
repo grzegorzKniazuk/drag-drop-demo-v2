@@ -1,18 +1,16 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { ColumnActions, ColumnActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { Column } from 'src/app/shared/interfaces/column';
-import { MoveIDs } from '../../../../../../shared/interfaces/moveIDs';
+import { SlideMove } from '../../../../../../shared/interfaces/slideMove';
 
 export interface ColumnState extends EntityState<Column> {
-    moveSlideStart: MoveIDs;
-    moveSlideEnd: MoveIDs;
+    slideMove: SlideMove,
 }
 
 export const columnAdapter: EntityAdapter<Column> = createEntityAdapter<Column>();
 
 export const initialColumunState: ColumnState = columnAdapter.getInitialState({
-    moveSlideStart: undefined,
-    moveSlideEnd: undefined,
+    slideMove: undefined,
 });
 
 export function columnReducer(state = initialColumunState, action: ColumnActions): ColumnState {
@@ -35,6 +33,32 @@ export function columnReducer(state = initialColumunState, action: ColumnActions
 
         case ColumnActionTypes.DeleteColumn: {
             return columnAdapter.removeOne(action.payload.id, state);
+        }
+        case ColumnActionTypes.MoveSlideStart: {
+            return {
+                ...state,
+                slideMove: {
+                    ...state.slideMove,
+                    start: {
+                        columnID: action.payload.columnID,
+                        slideID: action.payload.slideID,
+                    },
+                    dropOnDivider: false,
+                },
+            }
+        }
+        case ColumnActionTypes.MoveSlideEnd: {
+            return {
+                ...state,
+                slideMove: {
+                    ...state.slideMove,
+                    end: {
+                        columnID: action.payload.columnID,
+                        slideID: action.payload.slideID,
+                    },
+                    dropOnDivider: action.payload.dropOnDivider,
+                },
+            }
         }
 
         default: {
