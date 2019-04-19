@@ -13,6 +13,7 @@ import { selectSlideFromLibaryById } from '../../../modules/dashboard/components
 import { Slide } from '../../interfaces/slide';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { SlideMove } from '../../interfaces/slideMove';
+import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -72,7 +73,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                     slides: [ droppedSlide ],
                 },
             }));
+            this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slideMove.slideID ] }));
         });
     }
-
 }

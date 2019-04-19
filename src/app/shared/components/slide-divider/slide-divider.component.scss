@@ -1,0 +1,7 @@
+@import "./src/assets/styles/base.scss";
+
+.slide-divider {
+    @include flex(flex);
+    @include size(200px, 20px);
+    background: brown;
+}

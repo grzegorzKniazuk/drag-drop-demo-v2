@@ -5,7 +5,10 @@
         </mat-form-field>
     </div>
     <div class="thumbnails-container">
-        <dd-slide-thumbnail *ngFor="let slide of slides" [slide]="slide" [columnID]="id"></dd-slide-thumbnail>
+        <ng-container *ngFor="let slide of slides; let i = index">
+            <dd-slide-thumbnail [slide]="slide" [columnID]="id"></dd-slide-thumbnail>
+            <dd-slide-divider *ngIf="slides.length !== i + 1"></dd-slide-divider>
+        </ng-container>
     </div>
 </div>
 

@@ -8,6 +8,7 @@ import { SlideMove } from '../../interfaces/slideMove';
 import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { first } from 'rxjs/operators';
 import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -38,21 +39,21 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
         event.stopImmediatePropagation();
 
         this.slideMove = JSON.parse(event.dataTransfer.getData('string'));
-        console.log(this.slideMove);
+
         if (!this.slideMove.columnID) { // jesli drag n drop z biblioteki
             this.store.pipe(
                 select(selectSlideFromLibaryById(this.slideMove.slideID)),
                 first(),
             ).subscribe((droppedSlide: Slide) => {
-                console.log(droppedSlide);
                 this.store.dispatch(new UpdateColumn({
                     column: {
                         id: this.id,
                         changes: {
                             slides: [ ...this.slides, droppedSlide ],
-                        }
+                        },
                     },
                 }));
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slideMove.slideID ] }));
             });
         }
     }

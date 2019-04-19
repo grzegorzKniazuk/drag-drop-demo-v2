@@ -13,6 +13,7 @@ import { ColumnsDividerComponent } from './components/columns-divider/columns-di
 import { ColumnTitleComponent } from './components/column-title/column-title.component';
 import { ColumnComponent } from './components/column/column.component';
 import { LibaryColumnsDividerComponent } from './components/libary-columns-divider/libary-columns-divider.component';
+import { SlideDividerComponent } from './components/slide-divider/slide-divider.component';
 
 const components = [
     NoSlidesInPresentationComponent,
@@ -26,6 +27,7 @@ const components = [
     ColumnTitleComponent,
     ColumnComponent,
     LibaryColumnsDividerComponent,
+    SlideDividerComponent,
 ];
 
 const entryConponents = [
