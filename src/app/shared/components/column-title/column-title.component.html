@@ -1,10 +1,10 @@
 <h1 mat-dialog-title>Wprowadź tytuł nowej sekcji</h1>
 <div mat-dialog-content>
     <mat-form-field>
-        <input matInput [(ngModel)]="columnTitle">
+        <input matInput [(ngModel)]="title">
     </mat-form-field>
 </div>
 <div mat-dialog-actions class="mat-dialog-actions">
     <button mat-raised-button color="warn" (click)="cancel()">Anuluj</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="columnTitle">Zapisz</button>
+    <button mat-raised-button color="primary" (click)="submit()">Zapisz</button>
 </div>

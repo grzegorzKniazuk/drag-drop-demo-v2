@@ -29,6 +29,8 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
     }
 
     public dragStart(event: DragEvent): void {
+        console.log(this.columnID);
+        console.log(this.slide.id);
         event.dataTransfer.setData('string', JSON.stringify({
             columnID: this.columnID,
             slideID: this.slide.id,

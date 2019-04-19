@@ -9,9 +9,6 @@ import { Title } from '../../models/title';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PresentationTitleComponent extends Title<PresentationTitleComponent> {
-
-    public presentationTitle: string;
-
     constructor(
         matDialogRef: MatDialogRef<PresentationTitleComponent>,
     ) {

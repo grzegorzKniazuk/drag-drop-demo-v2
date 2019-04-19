@@ -9,9 +9,6 @@ import { MatDialogRef } from '@angular/material';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ColumnTitleComponent extends Title<ColumnTitleComponent> {
-
-    public columnTitle: string;
-
     constructor(matDialogRef: MatDialogRef<ColumnTitleComponent>) {
         super(matDialogRef);
     }
