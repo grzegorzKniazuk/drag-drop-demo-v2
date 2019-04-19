@@ -18,13 +18,12 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
     @Input() public slides: Slide[];
 
     constructor(
-        store: Store<AppState>
+        store: Store<AppState>,
     ) {
         super(store);
     }
 
     ngOnInit() {
-        this.watchOnMoveSlideStart();
     }
 
     ngOnDestroy() {
@@ -32,7 +31,5 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
 
     public onDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
-
-        console.log(event);
     }
 }

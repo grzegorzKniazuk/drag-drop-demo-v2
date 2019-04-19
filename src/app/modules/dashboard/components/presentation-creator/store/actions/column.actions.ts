@@ -8,8 +8,6 @@ export enum ColumnActionTypes {
     UpdateColumn = '[Column] Update Column',
     UpdateColumns = '[Column] Update Columns',
     DeleteColumn = '[Column] Delete Column',
-    MoveSlideStart = '[Column] Move Slide Start',
-    MoveSlideEnd = '[Column] Move Slide End',
 }
 
 export class AddColumn implements Action {
@@ -47,25 +45,9 @@ export class DeleteColumn implements Action {
     }
 }
 
-export class MoveSlideStart implements Action {
-    public readonly type = ColumnActionTypes.MoveSlideStart;
-
-    constructor(public payload: { columnID: number, slideID: number }) {
-    }
-}
-
-export class MoveSlideEnd implements Action {
-    public readonly type = ColumnActionTypes.MoveSlideEnd;
-
-    constructor(public payload: { columnID: number, slideID: number, dropOnDivider: boolean }) {
-    }
-}
-
 export type ColumnActions =
     AddColumn
     | AddColumns
     | UpdateColumn
     | UpdateColumns
-    | DeleteColumn
-    | MoveSlideStart
-    | MoveSlideEnd;
+    | DeleteColumn;

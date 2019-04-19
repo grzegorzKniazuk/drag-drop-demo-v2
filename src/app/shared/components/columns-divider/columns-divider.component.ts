@@ -6,7 +6,7 @@ import { AppState } from '../../../store';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { MatDialog } from '@angular/material';
 import { filter, first, withLatestFrom } from 'rxjs/operators';
-import { selectColumnsEntities } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Column } from '../../interfaces/column';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
@@ -29,13 +29,12 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
 
     ngOnInit() {
         // console.log(this.dividerSibilings);
-        this.watchOnMoveSlideStart();
     }
 
     ngOnDestroy() {
     }
 
-    public dropOnDivider(event: DragEvent): void {
+    public onDropOnDivider(event: DragEvent): void {
         event.stopImmediatePropagation();
 
         const droppedSlideId = +event.dataTransfer.getData('string');
@@ -47,7 +46,7 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
         }).afterClosed().pipe(
             first(),
             filter((columnTitle: string) => !!columnTitle),
-            withLatestFrom(this.store.pipe(select(selectColumnsEntities))),
+            withLatestFrom(this.store.pipe(select(selectColumnsState))),
         ).subscribe(([ columTitle, columns ]: [ string, Column[] ]) => {
 
         });

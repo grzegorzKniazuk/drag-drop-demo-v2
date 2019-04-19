@@ -10,7 +10,7 @@ export interface ColumnState extends EntityState<Column> {
 export const columnAdapter: EntityAdapter<Column> = createEntityAdapter<Column>();
 
 export const initialColumunState: ColumnState = columnAdapter.getInitialState({
-    slideMove: undefined,
+    slideMove: null,
 });
 
 export function columnReducer(state = initialColumunState, action: ColumnActions): ColumnState {
@@ -34,33 +34,6 @@ export function columnReducer(state = initialColumunState, action: ColumnActions
         case ColumnActionTypes.DeleteColumn: {
             return columnAdapter.removeOne(action.payload.id, state);
         }
-        case ColumnActionTypes.MoveSlideStart: {
-            return {
-                ...state,
-                slideMove: {
-                    ...state.slideMove,
-                    start: {
-                        columnID: action.payload.columnID,
-                        slideID: action.payload.slideID,
-                    },
-                    dropOnDivider: false,
-                },
-            }
-        }
-        case ColumnActionTypes.MoveSlideEnd: {
-            return {
-                ...state,
-                slideMove: {
-                    ...state.slideMove,
-                    end: {
-                        columnID: action.payload.columnID,
-                        slideID: action.payload.slideID,
-                    },
-                    dropOnDivider: action.payload.dropOnDivider,
-                },
-            }
-        }
-
         default: {
             return state;
         }

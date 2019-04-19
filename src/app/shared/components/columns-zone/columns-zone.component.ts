@@ -2,16 +2,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
-import { amountOfPresentationColumns, selectColumnsEntities, selectMoveSlideState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { amountOfPresentationColumns, selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Droppable } from '../../models/droppable';
 import { filter, first, withLatestFrom } from 'rxjs/operators';
-import { AddColumn, MoveSlideEnd } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { AddColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { MatDialog } from '@angular/material';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { Column } from '../../interfaces/column';
 import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { Slide } from '../../interfaces/slide';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { SlideMove } from '../../interfaces/slideMove';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,6 +24,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
 
     public amountOfPresentationColumns$: Observable<number>;
     public columnsEntities$: Observable<Column[]>;
+    private slideMove: SlideMove;
 
     constructor(
         private matDialog: MatDialog,
@@ -34,7 +36,6 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
     ngOnInit() {
         this.initAmountOfPresentationColumns();
         this.initColumnEntities();
-        this.watchOnMoveSlideStart();
     }
 
     ngOnDestroy() {
@@ -45,20 +46,22 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
     }
 
     private initColumnEntities(): void {
-        this.columnsEntities$ = this.store.pipe(select(selectColumnsEntities));
+        this.columnsEntities$ = this.store.pipe(select(selectColumnsState));
     }
 
     private addSectionOnDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
 
+        this.slideMove = JSON.parse(event.dataTransfer.getData('string'));
+
         this.matDialog.open(ColumnTitleComponent, {
             disableClose: true,
             hasBackdrop: true,
         }).afterClosed().pipe(
-            first(),
             filter((columnTitle: string) => !!columnTitle),
+            first(),
             withLatestFrom(
-                this.store.pipe(select(selectSlideFromLibaryById(this.slideMoveStartID))),
+                this.store.pipe(select(selectSlideFromLibaryById(this.slideMove.slideID))),
                 this.store.pipe(select(amountOfPresentationColumns)),
             ))
         .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {

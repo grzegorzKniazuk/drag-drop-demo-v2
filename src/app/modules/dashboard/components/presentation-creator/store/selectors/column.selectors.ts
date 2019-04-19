@@ -7,12 +7,7 @@ export const amountOfPresentationColumns = createSelector(
     columnEntitySelectors.selectTotal,
 );
 
-export const selectColumnsEntities = createSelector(
+export const selectColumnsState = createSelector(
     columnsState,
     columnEntitySelectors.selectAll,
-);
-
-export const selectMoveSlideState = createSelector(
-    columnsState,
-    columnsState => columnsState.slideMove,
 );
