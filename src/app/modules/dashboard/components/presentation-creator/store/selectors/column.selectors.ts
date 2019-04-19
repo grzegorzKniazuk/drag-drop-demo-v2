@@ -7,7 +7,7 @@ export const amountOfPresentationColumns = createSelector(
     columnEntitySelectors.selectTotal,
 );
 
-export const columnsEntities = createSelector(
+export const selectColumnsEntities = createSelector(
     columnsState,
     columnEntitySelectors.selectAll,
 );

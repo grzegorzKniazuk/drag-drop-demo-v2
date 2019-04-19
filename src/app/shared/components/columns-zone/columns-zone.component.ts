@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
-import { amountOfPresentationColumns, columnsEntities } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { amountOfPresentationColumns, selectColumnsEntities } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Droppable } from '../../models/droppable';
 import { filter, first, withLatestFrom } from 'rxjs/operators';
 import { AddColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { MatDialog } from '@angular/material';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { Column } from '../../interfaces/column';
-import { selectSlideById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
+import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { Slide } from '../../interfaces/slide';
 
 @Component({
@@ -39,11 +39,11 @@ export class ColumnsZoneComponent extends Droppable implements OnInit {
     }
 
     private initColumnEntities(): void {
-        this.columnsEntities$ = this.store.pipe(select(columnsEntities));
+        this.columnsEntities$ = this.store.pipe(select(selectColumnsEntities));
     }
 
     private addSectionOnDrop(event: DragEvent): void {
-        event.stopPropagation();
+        event.stopImmediatePropagation();
 
         const droppedSlideId = +event.dataTransfer.getData('string');
 
@@ -53,7 +53,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit {
         }).afterClosed().pipe(
             first(),
             filter((columnTitle: string) => !!columnTitle),
-            withLatestFrom(this.store.pipe(select(selectSlideById(droppedSlideId))), this.store.pipe(select(amountOfPresentationColumns))),
+            withLatestFrom(this.store.pipe(select(selectSlideFromLibaryById(droppedSlideId))), this.store.pipe(select(amountOfPresentationColumns))),
         ).subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
             this.store.dispatch(new AddColumn({
                 column: {

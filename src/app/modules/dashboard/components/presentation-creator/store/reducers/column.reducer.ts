@@ -1,15 +1,18 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { ColumnActions, ColumnActionTypes } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { Column } from 'src/app/shared/interfaces/column';
+import { MoveIDs } from '../../../../../../shared/interfaces/moveIDs';
 
 export interface ColumnState extends EntityState<Column> {
-    // additional entities state properties
+    moveSlideStart: MoveIDs;
+    moveSlideEnd: MoveIDs;
 }
 
 export const columnAdapter: EntityAdapter<Column> = createEntityAdapter<Column>();
 
 export const initialColumunState: ColumnState = columnAdapter.getInitialState({
-    // additional entity state properties
+    moveSlideStart: undefined,
+    moveSlideEnd: undefined,
 });
 
 export function columnReducer(state = initialColumunState, action: ColumnActions): ColumnState {
@@ -18,16 +21,8 @@ export function columnReducer(state = initialColumunState, action: ColumnActions
             return columnAdapter.addOne(action.payload.column, state);
         }
 
-        case ColumnActionTypes.UpsertColumn: {
-            return columnAdapter.upsertOne(action.payload.column, state);
-        }
-
         case ColumnActionTypes.AddColumns: {
             return columnAdapter.addMany(action.payload.columns, state);
-        }
-
-        case ColumnActionTypes.UpsertColumns: {
-            return columnAdapter.upsertMany(action.payload.columns, state);
         }
 
         case ColumnActionTypes.UpdateColumn: {
@@ -40,18 +35,6 @@ export function columnReducer(state = initialColumunState, action: ColumnActions
 
         case ColumnActionTypes.DeleteColumn: {
             return columnAdapter.removeOne(action.payload.id, state);
-        }
-
-        case ColumnActionTypes.DeleteColumns: {
-            return columnAdapter.removeMany(action.payload.ids, state);
-        }
-
-        case ColumnActionTypes.LoadColumns: {
-            return columnAdapter.addAll(action.payload.columns, state);
-        }
-
-        case ColumnActionTypes.ClearColumns: {
-            return columnAdapter.removeAll(state);
         }
 
         default: {

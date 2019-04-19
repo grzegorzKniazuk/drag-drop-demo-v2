@@ -12,7 +12,7 @@ export const slidesLibaryEntities = createSelector(
     slidesLibaryEntitySelectors.selectAll,
 );
 
-export const selectSlideById = (slideId: number) => createSelector(
+export const selectSlideFromLibaryById = (slideId: number) => createSelector(
     slidesLibaryState,
     state => state.entities[slideId],
 );
