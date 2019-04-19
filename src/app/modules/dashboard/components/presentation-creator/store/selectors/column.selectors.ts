@@ -11,3 +11,8 @@ export const selectColumnsEntities = createSelector(
     columnsState,
     columnEntitySelectors.selectAll,
 );
+
+export const selectMoveSlideState = createSelector(
+    columnsState,
+    columnsState => columnsState.slideMove,
+);
