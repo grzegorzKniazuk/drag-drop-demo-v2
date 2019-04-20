@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DividerSiblings } from '../../interfaces/divider-siblings';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { MatDialog } from '@angular/material';
-import { filter, first, withLatestFrom } from 'rxjs/operators';
+import { filter, first, tap, withLatestFrom } from 'rxjs/operators';
 import { selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Column } from '../../interfaces/column';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
@@ -29,6 +29,7 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
     constructor(
         private matDialog: MatDialog,
         private store: Store<AppState>,
+        private changeDetectorRef: ChangeDetectorRef,
     ) {
         super();
     }
@@ -41,7 +42,6 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
 
     public onDropOnDivider(event: DragEvent): void {
         event.stopImmediatePropagation();
-        this.isElementOnDragOver = false;
 
         const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string')); // columnID, slideID
 
@@ -53,6 +53,10 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 filter((columnTitle: string) => !!columnTitle),
                 first(),
                 withLatestFrom(this.store.pipe(select(selectColumnsState))),
+                tap(() => {
+                    this.isElementOnDragOver = false;
+                    this.changeDetectorRef.detectChanges();
+                }),
             ).subscribe(([ columTitle, columns ]: [ string, Column[] ]) => {
 
                 // zrodlowa kolumna
@@ -118,6 +122,10 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                     this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID))), // slajd do przeniesienia
                     this.store.pipe(select(selectColumnsState)), // wszystkie kolumny
                 ),
+                tap(() => {
+                    this.isElementOnDragOver = false;
+                    this.changeDetectorRef.detectChanges();
+                }),
             ).subscribe(([ columTitle, sourceSlide, columns ]: [ string, Slide, Column[] ]) => {
 
                 // przygotuj kolumny
