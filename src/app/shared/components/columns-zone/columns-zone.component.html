@@ -8,7 +8,7 @@
     <ng-container *ngIf="(amountOfPresentationColumns$ | async) as amountOfPresentationColumns">
         <ng-container *ngFor="let column of (columnsEntities$ | async); let i = index">
             <dd-column [id]="column.id" [title]="column.title" [slides]="column.slides"></dd-column>
-            <dd-columns-divider *ngIf="amountOfPresentationColumns !== i + 1" [dividerSibilings]="{ leftSideElementId: column.id, rightSideElementId: column.id + 1 }"></dd-columns-divider>
+            <dd-columns-divider *ngIf="amountOfPresentationColumns !== i + 1" [dividerSibilings]="{ leftSideColumnID: column.id, rightSideColumnID: column.id + 1 }"></dd-columns-divider>
     </ng-container>
     </ng-container>
 </div>

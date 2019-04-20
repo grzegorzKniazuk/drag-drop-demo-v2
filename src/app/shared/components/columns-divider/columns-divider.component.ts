@@ -10,6 +10,10 @@ import { selectColumnsState } from 'src/app/modules/dashboard/components/present
 import { Column } from '../../interfaces/column';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { SlideMove } from '../../interfaces/slideMove';
+import { AddColumns, DeleteAllColumns } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { Slide } from '../../interfaces/slide';
+import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
+import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -29,7 +33,6 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
     }
 
     ngOnInit() {
-        console.log(this.dividerSibilings);
     }
 
     ngOnDestroy() {
@@ -37,19 +40,101 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
 
     public onDropOnDivider(event: DragEvent): void {
         event.stopImmediatePropagation();
+        this.isElementOnDragOver = false;
 
-        const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
-        console.log(slideMove);
+        const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string')); // columnID, slideID
 
-        this.matDialog.open(ColumnTitleComponent, {
-            disableClose: true,
-            hasBackdrop: true,
-        }).afterClosed().pipe(
-            first(),
-            filter((columnTitle: string) => !!columnTitle),
-            withLatestFrom(this.store.pipe(select(selectColumnsState))),
-        ).subscribe(([ columTitle, columns ]: [ string, Column[] ]) => {
+        if (slideMove.columnID >= 0) { // jesli slajd przeniesiony z kolumn prezentacji
+            this.matDialog.open(ColumnTitleComponent, {
+                disableClose: true,
+                hasBackdrop: true,
+            }).afterClosed().pipe(
+                filter((columnTitle: string) => !!columnTitle),
+                first(),
+                withLatestFrom(this.store.pipe(select(selectColumnsState))),
+            ).subscribe(([ columTitle, columns ]: [ string, Column[] ]) => {
 
-        });
+                // zrodlowa kolumna
+                const sourceColumn = columns.find((column: Column) => {
+                    return column.id === slideMove.columnID;
+                });
+
+                // slajd do przeniesienia
+                const sourceSlide = sourceColumn.slides.find((slide: Slide) => {
+                    return slide.id === slideMove.slideID;
+                });
+
+                // przygotuj kolumny
+                columns.forEach((column: Column) => {
+
+                    // usun slajd z kolumny poczatkowej
+                    if (column.id === slideMove.columnID) {
+                        column.slides = column.slides.filter((slide: Slide) => {
+                            return slide.id !== slideMove.slideID;
+                        });
+                    }
+
+                    // podnies id kolumn po prawej stronie
+                    if (column.id >= this.dividerSibilings.rightSideColumnID) {
+                        column.id++;
+                    }
+                });
+
+                // stworz obiekt nowej kolumny
+                const newColumn: Column = {
+                    id: this.dividerSibilings.leftSideColumnID + 1,
+                    title: columTitle,
+                    slides: [ sourceSlide ],
+                };
+
+                // aktualizuj tablice kolumn
+                columns = [ ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1), newColumn, ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length) ];
+
+                // wyczysc kolumny
+                this.store.dispatch(new DeleteAllColumns());
+
+                // dodaj zaktualizowane kolumny
+                this.store.dispatch(new AddColumns({ columns }));
+            });
+        } else if (slideMove.columnID === undefined) { // jesli slajd przeniesiony z bibloteki
+            this.matDialog.open(ColumnTitleComponent, {
+                disableClose: true,
+                hasBackdrop: true,
+            }).afterClosed().pipe(
+                filter((columnTitle: string) => !!columnTitle),
+                first(),
+                withLatestFrom(
+                    this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID))), // slajd do przeniesienia
+                    this.store.pipe(select(selectColumnsState)), // wszystkie kolumny
+                ),
+            ).subscribe(([ columTitle, sourceSlide, columns ]: [ string, Slide, Column[] ]) => {
+
+                // przygotuj kolumny
+                columns.forEach((column: Column) => {
+                    if (column.id >= this.dividerSibilings.rightSideColumnID) {
+                        column.id++;
+                    }
+                });
+
+                // stworz obiekt nowej kolumny
+                const newColumn: Column = {
+                    id: this.dividerSibilings.leftSideColumnID + 1,
+                    title: columTitle,
+                    slides: [ sourceSlide ],
+                };
+
+                // aktualizuj tablice kolumn
+                columns = [ ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1), newColumn, ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length) ];
+
+                // usun slajd z listy nierozmieszczonych slajdow
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ sourceSlide.id ] }));
+
+                // wyczysc kolumny
+                this.store.dispatch(new DeleteAllColumns());
+
+                // dodaj zaktualizowane kolumny
+                this.store.dispatch(new AddColumns({ columns }));
+            });
+        }
     }
 }

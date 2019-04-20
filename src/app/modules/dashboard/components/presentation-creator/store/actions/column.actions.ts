@@ -8,6 +8,7 @@ export enum ColumnActionTypes {
     UpdateColumn = '[Column] Update Column',
     UpdateColumns = '[Column] Update Columns',
     DeleteColumn = '[Column] Delete Column',
+    DeleteAllColumns = '[Column] Delete All Columns',
 }
 
 export class AddColumn implements Action {
@@ -45,9 +46,14 @@ export class DeleteColumn implements Action {
     }
 }
 
+export class DeleteAllColumns implements Action {
+    public readonly type = ColumnActionTypes.DeleteAllColumns;
+}
+
 export type ColumnActions =
     AddColumn
     | AddColumns
     | UpdateColumn
     | UpdateColumns
-    | DeleteColumn;
+    | DeleteColumn
+    | DeleteAllColumns;

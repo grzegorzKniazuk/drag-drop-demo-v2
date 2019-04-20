@@ -17,12 +17,6 @@ export function presentationListReducer(state = initialPresentationListState, ac
         case PresentationListActionsTypes.AddPresentation: {
             return presentationListAdapter.addOne(action.payload.presentation, state);
         }
-        case PresentationListActionsTypes.UpdatePresentation: {
-            return presentationListAdapter.updateOne(action.payload.presentation, state);
-        }
-        case PresentationListActionsTypes.DeletePresentation: {
-            return presentationListAdapter.removeOne(action.payload.id, state);
-        }
         default: {
             return state;
         }

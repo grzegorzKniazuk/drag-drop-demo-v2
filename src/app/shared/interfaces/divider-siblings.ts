@@ -1,4 +1,4 @@
 export interface DividerSiblings {
-    leftSideElementId: number;
-    rightSideElementId: number;
+    leftSideColumnID: number;
+    rightSideColumnID: number;
 }
