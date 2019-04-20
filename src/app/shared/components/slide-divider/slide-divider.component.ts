@@ -48,6 +48,9 @@ export class SlideDividerComponent extends Droppable implements OnInit {
                 // usun slajd z bibloteki
                 this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ sourceSlide.id ] }));
 
+                // aktualizuj columnID slajdu
+                sourceSlide.columnId = this.columnID;
+
                 // przygotuj slajdy w kolumnie
                 const updatedSlideArray = [
                     ...targetColumn.slides.slice(0, this.dividerSibilings.topID + 1),
