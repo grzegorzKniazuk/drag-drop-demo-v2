@@ -25,7 +25,6 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
 
     public amountOfPresentationColumns$: Observable<number>;
     public columnsEntities$: Observable<Column[]>;
-    private slideMove: SlideMove; // columnID, slideID
 
     constructor(
         private matDialog: MatDialog,
@@ -53,9 +52,9 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
     private addSectionOnDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
 
-        this.slideMove = JSON.parse(event.dataTransfer.getData('string'));
+        const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
 
-        if (this.slideMove.columnID === undefined && this.slideMove.slideID) { // jesli drag n drop z biblioteki
+        if (slideMove.columnID === undefined && slideMove.slideID) { // jesli drag n drop z biblioteki
             this.matDialog.open(ColumnTitleComponent, {
                 disableClose: true,
                 hasBackdrop: true,
@@ -63,7 +62,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 filter((columnTitle: string) => !!columnTitle),
                 first(),
                 withLatestFrom(
-                    this.store.pipe(select(selectSlideFromLibaryById(this.slideMove.slideID))),
+                    this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID))),
                     this.store.pipe(select(amountOfPresentationColumns)),
                 ))
             .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
@@ -78,9 +77,9 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 }));
 
                 // usun element z biblioteki
-                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slideMove.slideID ] }));
+                // this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
             });
-        } else if (this.slideMove.columnID >= 0 && this.slideMove.slideID) { // jesli drag n drop z innej kolumny
+        } else if (slideMove.columnID >= 0 && slideMove.slideID) { // jesli drag n drop z innej kolumny
             this.matDialog.open(ColumnTitleComponent, {
                 disableClose: true,
                 hasBackdrop: true,
@@ -88,7 +87,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 filter((columnTitle: string) => !!columnTitle),
                 first(),
                 withLatestFrom(
-                    this.store.pipe(select(selectColumnByID(this.slideMove.columnID))),
+                    this.store.pipe(select(selectColumnByID(slideMove.columnID))),
                     this.store.pipe(select(amountOfPresentationColumns)),
                 ),
             ).subscribe(([ columnTitle, startedColumn, numberOfColumns ]: [ string, Column, number ]) => {
@@ -98,7 +97,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                         id: numberOfColumns,
                         title: columnTitle,
                         slides: [ startedColumn.slides.find((slide: Slide) => {
-                            return slide.id === this.slideMove.slideID;
+                            return slide.id === slideMove.slideID;
                         }) ],
                     },
                 }));
@@ -106,10 +105,10 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 // usun element z  poprzedniej kolumny
                 this.store.dispatch(new UpdateColumn({
                     column: {
-                        id: this.slideMove.columnID,
+                        id: slideMove.columnID,
                         changes: {
                             slides: startedColumn.slides.filter((slide: Slide) => {
-                                return slide.id !== this.slideMove.slideID;
+                                return slide.id !== slideMove.slideID;
                             }),
                         },
                     },

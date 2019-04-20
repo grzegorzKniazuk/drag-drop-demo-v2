@@ -9,6 +9,7 @@ import { selectColumnByID } from '../../../modules/dashboard/components/presenta
 import { first, withLatestFrom } from 'rxjs/operators';
 import { Column } from '../../interfaces/column';
 import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 
 @AutoUnsubscribe()
 @Component({
@@ -80,7 +81,7 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
                 select(selectColumnByID(slideMove.columnID)), // pobierz wyjsciowa kolumne ze store'a
                 withLatestFrom(this.store.pipe(select(selectColumnByID(this.columnID)))), // pobierz docelowa kolumne ze store'a
                 first(),
-            ).subscribe(([ sourceColumn, targetcolumn ]: [ Column, Column ]) => {
+            ).subscribe(([ sourceColumn, targetcColumn ]: [ Column, Column ]) => {
 
                 // ustal pozycje slajdow w kolumnach
                 const slideToMove = sourceColumn.slides.find((slide: Slide) => {
@@ -89,13 +90,13 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
 
                 const slideToMoveIndexInColumn = sourceColumn.slides.indexOf(slideToMove);
 
-                const slideTarget = targetcolumn.slides.find((slide: Slide) => {
+                const slideTarget = targetcColumn.slides.find((slide: Slide) => {
                     return slide.id === this.slide.id;
                 });
-                const slideTargetIndexInColumn = targetcolumn.slides.indexOf(slideTarget);
+                const slideTargetIndexInColumn = targetcColumn.slides.indexOf(slideTarget);
 
                 // zamien miejscami
-                targetcolumn.slides[slideTargetIndexInColumn] = slideToMove;
+                targetcColumn.slides[slideTargetIndexInColumn] = slideToMove;
                 sourceColumn.slides[slideToMoveIndexInColumn] = slideTarget;
 
                 // aktualizuj store'a
@@ -104,15 +105,39 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
                         id: slideMove.columnID,
                         changes: {
                             slides: sourceColumn.slides,
-                        }
-                    }
+                        },
+                    },
                 }));
 
                 this.store.dispatch(new UpdateColumn({ // docelowa kolumna
                     column: {
                         id: this.columnID,
                         changes: {
-                            slides: targetcolumn.slides,
+                            slides: targetcColumn.slides,
+                        },
+                    },
+                }));
+            });
+        } else if (slideMove.columnID === undefined) { // drag n drop z nierozmieszczonych slajdow na slajd w kolumnie
+            this.store.pipe(
+                select(selectColumnByID(this.columnID)), // pobierz docelowa kolumne
+                withLatestFrom(this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID)))), // pobierz slajd z biblioteki
+                first(),
+            ).subscribe(([ targetColumn, slideFromLibary ]: [ Column, Slide ]) => {
+                // ustal pozycje docelowego slajdu w kolumnie
+                const slideTarget = targetColumn.slides.find((slide: Slide) => {
+                    return slide.id === this.slide.id;
+                });
+                const slideTargetIndexInColumn = targetColumn.slides.indexOf(slideTarget);
+
+                targetColumn.slides[slideTargetIndexInColumn] = slideFromLibary;
+
+                // aktualizuj store'a
+                this.store.dispatch(new UpdateColumn({
+                    column: {
+                        id: this.columnID,
+                        changes: {
+                            slides: targetColumn.slides,
                         },
                     },
                 }));
