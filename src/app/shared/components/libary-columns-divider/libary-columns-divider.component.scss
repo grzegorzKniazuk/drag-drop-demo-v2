@@ -3,5 +3,4 @@
 .column-divider {
     @include flex(flex);
     @include size(30px, 114px);
-    background: #007bff;
 }
