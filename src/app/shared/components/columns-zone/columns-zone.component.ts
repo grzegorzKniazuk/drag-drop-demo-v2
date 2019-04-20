@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/pr
     selector: 'dd-columns-zone',
     templateUrl: './columns-zone.component.html',
     styleUrls: [ './columns-zone.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy {
 
@@ -28,9 +29,9 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
 
     constructor(
         private matDialog: MatDialog,
-        store: Store<AppState>,
+        private store: Store<AppState>,
     ) {
-        super(store);
+        super();
     }
 
     ngOnInit() {

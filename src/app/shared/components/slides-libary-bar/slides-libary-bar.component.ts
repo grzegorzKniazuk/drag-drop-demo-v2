@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { FileUploader } from '../../models/file-uploader';
     selector: 'dd-slides-libary-bar',
     templateUrl: './slides-libary-bar.component.html',
     styleUrls: [ './slides-libary-bar.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SlidesLibaryBarComponent extends FileUploader implements OnInit {
 

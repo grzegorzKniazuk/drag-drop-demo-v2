@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Slide } from '../../interfaces/slide';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
@@ -17,6 +17,7 @@ import { Column } from '../../interfaces/column';
     selector: 'dd-column',
     templateUrl: './column.component.html',
     styleUrls: [ './column.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
 
@@ -25,9 +26,9 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
     @Input() public slides: Slide[];
 
     constructor(
-        store: Store<AppState>,
+        private store: Store<AppState>,
     ) {
-        super(store);
+        super();
     }
 
     ngOnInit() {

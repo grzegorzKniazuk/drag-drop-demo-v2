@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../store';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { amountOfPresentationsInLibary } from './store/selectors/presentation-li
     selector: 'dd-presentation-libary',
     templateUrl: './presentation-libary.component.html',
     styleUrls: [ './presentation-libary.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PresentationLibaryComponent implements OnInit {
 

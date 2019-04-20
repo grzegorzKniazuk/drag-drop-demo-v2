@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DividerSiblings } from '../../interfaces/divider-siblings';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
@@ -20,6 +20,7 @@ import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/pr
     selector: 'dd-columns-divider',
     templateUrl: './columns-divider.component.html',
     styleUrls: [ './columns-divider.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnsDividerComponent extends Droppable implements OnInit, OnDestroy {
 
@@ -27,9 +28,9 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
 
     constructor(
         private matDialog: MatDialog,
-        store: Store<AppState>,
+        private store: Store<AppState>,
     ) {
-        super(store);
+        super();
     }
 
     ngOnInit() {

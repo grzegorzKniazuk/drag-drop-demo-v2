@@ -10,7 +10,7 @@ import { filter, first } from 'rxjs/operators';
     selector: 'dd-no-presentations',
     templateUrl: './no-presentations.component.html',
     styleUrls: [ './no-presentations.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoPresentationsComponent {
 

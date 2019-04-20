@@ -6,7 +6,7 @@ import { MatDialogRef } from '@angular/material';
     selector: 'dd-column-title',
     templateUrl: './column-title.component.html',
     styleUrls: [ './column-title.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnTitleComponent extends Title<ColumnTitleComponent> {
     constructor(matDialogRef: MatDialogRef<ColumnTitleComponent>) {

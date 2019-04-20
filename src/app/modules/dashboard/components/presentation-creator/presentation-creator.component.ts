@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { select, Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import { amountOfPresentationColumns } from './store/selectors/column.selectors'
     selector: 'dd-presentation-creator',
     templateUrl: './presentation-creator.component.html',
     styleUrls: [ './presentation-creator.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PresentationCreatorComponent implements OnInit, OnDestroy {
 

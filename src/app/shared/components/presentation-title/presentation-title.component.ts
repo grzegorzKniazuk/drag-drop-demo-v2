@@ -6,7 +6,7 @@ import { Title } from '../../models/title';
     selector: 'dd-presentation-title',
     templateUrl: './presentation-title.component.html',
     styleUrls: [ './presentation-title.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PresentationTitleComponent extends Title<PresentationTitleComponent> {
     constructor(

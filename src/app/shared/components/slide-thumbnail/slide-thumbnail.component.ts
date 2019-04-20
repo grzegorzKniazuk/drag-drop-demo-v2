@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Slide } from 'src/app/shared/interfaces/slide';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
@@ -17,19 +17,17 @@ import { AddSlidesToLibary, DeleteSlidesFromLibary } from '../../../modules/dash
     selector: 'dd-slide-thumbnail',
     templateUrl: './slide-thumbnail.component.html',
     styleUrls: [ './slide-thumbnail.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SlideThumbnailComponent extends Droppable implements OnInit, OnDestroy {
+export class SlideThumbnailComponent extends Droppable implements OnDestroy {
 
     @Input() public columnID: number;
     @Input() public slide: Slide;
 
     constructor(
-        store: Store<AppState>,
+        private store: Store<AppState>,
     ) {
-        super(store);
-    }
-
-    ngOnInit() {
+        super();
     }
 
     ngOnDestroy() {
