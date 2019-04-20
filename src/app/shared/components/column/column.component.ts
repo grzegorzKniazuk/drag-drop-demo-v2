@@ -68,6 +68,11 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
                 select(selectSlideFromLibaryById(slideMove.slideID)),
                 first(),
             ).subscribe((droppedSlide: Slide) => {
+
+                // aktualizuj id slajdu
+                droppedSlide.columnId = this.id;
+
+                // aktualizuj kolumne
                 this.store.dispatch(new UpdateColumn({
                     column: {
                         id: this.id,
@@ -91,16 +96,6 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
                     return slide.id === slideMove.slideID;
                 });
 
-                // przenies slajd
-                this.store.dispatch(new UpdateColumn({
-                    column: {
-                        id: this.id,
-                        changes: {
-                            slides: [ ...this.slides, slideToMove ],
-                        },
-                    },
-                }));
-
                 // usun slajd z poprzedniej kolumny
                 this.store.dispatch(new UpdateColumn({
                     column: {
@@ -109,6 +104,19 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
                             slides: startColumn.slides.filter((slide: Slide) => {
                                 return slide.id !== slideMove.slideID;
                             }),
+                        },
+                    },
+                }));
+
+                // aktualizuj id slajdu
+                slideToMove.columnId = this.id;
+
+                // przenies slajd
+                this.store.dispatch(new UpdateColumn({
+                    column: {
+                        id: this.id,
+                        changes: {
+                            slides: [ ...this.slides, slideToMove ],
                         },
                     },
                 }));

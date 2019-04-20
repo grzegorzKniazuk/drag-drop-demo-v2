@@ -68,7 +68,10 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 ))
             .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
 
-                // dodaj element w nowej kolumnie
+                // aktualizuj id slajdu
+                droppedSlide.columnId = numberOfColumns;
+
+                // dodaj kolumne z nowym elementem
                 this.store.dispatch(new AddColumn({
                     column: {
                         id: numberOfColumns,
@@ -92,14 +95,21 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                     this.store.pipe(select(amountOfPresentationColumns)),
                 ),
             ).subscribe(([ columnTitle, startedColumn, numberOfColumns ]: [ string, Column, number ]) => {
-                // dodaj element w nowej kolumnie
+
+                // znajd slajd do przeniesienia
+                const droppedSlide = startedColumn.slides.find((slide: Slide) => {
+                    return slide.id === slideMove.slideID;
+                });
+
+                // aktualizuj id slajdu
+                droppedSlide.columnId = numberOfColumns;
+
+                // dodaj kolumne z nowym elementem
                 this.store.dispatch(new AddColumn({
                     column: {
                         id: numberOfColumns,
                         title: columnTitle,
-                        slides: [ startedColumn.slides.find((slide: Slide) => {
-                            return slide.id === slideMove.slideID;
-                        }) ],
+                        slides: [ droppedSlide ],
                     },
                 }));
 

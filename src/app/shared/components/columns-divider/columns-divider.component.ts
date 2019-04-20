@@ -45,7 +45,7 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
 
         const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string')); // columnID, slideID
 
-        if (slideMove.columnID >= 0) { // jesli slajd przeniesiony z kolumn prezentacji
+        if (slideMove.columnID >= 0) { // jesli slajd przeniesiony z innej kolumny
             this.matDialog.open(ColumnTitleComponent, {
                 disableClose: true,
                 hasBackdrop: true,
@@ -64,6 +64,9 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 const sourceSlide = sourceColumn.slides.find((slide: Slide) => {
                     return slide.id === slideMove.slideID;
                 });
+
+                // aktualizuj column id dla slajdu
+                sourceSlide.columnId = this.dividerSibilings.leftSideColumnID + 1;
 
                 // przygotuj kolumny
                 columns.forEach((column: Column) => {
@@ -113,6 +116,9 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                     this.store.pipe(select(selectColumnsState)), // wszystkie kolumny
                 ),
             ).subscribe(([ columTitle, sourceSlide, columns ]: [ string, Slide, Column[] ]) => {
+
+                // aktualizuj column id dla slajdu
+                sourceSlide.columnId = this.dividerSibilings.leftSideColumnID + 1;
 
                 // przygotuj kolumny
                 columns.forEach((column: Column) => {
