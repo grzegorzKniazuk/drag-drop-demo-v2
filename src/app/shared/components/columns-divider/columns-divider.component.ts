@@ -81,6 +81,9 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                     // podnies id kolumn po prawej stronie
                     if (column.id >= this.dividerSibilings.rightSideColumnID) {
                         column.id++;
+                        column.slides.forEach((slide: Slide) => {
+                            slide.columnId++;
+                        });
                     }
                 });
 
@@ -117,15 +120,18 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 ),
             ).subscribe(([ columTitle, sourceSlide, columns ]: [ string, Slide, Column[] ]) => {
 
-                // aktualizuj column id dla slajdu
-                sourceSlide.columnId = this.dividerSibilings.leftSideColumnID + 1;
-
                 // przygotuj kolumny
                 columns.forEach((column: Column) => {
                     if (column.id >= this.dividerSibilings.rightSideColumnID) {
                         column.id++;
+                        column.slides.forEach((slide: Slide) => {
+                            slide.columnId++;
+                        });
                     }
                 });
+
+                // aktualizuj column id dla slajdu
+                sourceSlide.columnId = this.dividerSibilings.leftSideColumnID + 1;
 
                 // stworz obiekt nowej kolumny
                 const newColumn: Column = {
