@@ -13,4 +13,8 @@
             width: 100%;
         }
     }
+
+    &.drag-over {
+        background: darken($white, 15%);
+    }
 }

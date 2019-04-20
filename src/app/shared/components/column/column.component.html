@@ -1,4 +1,8 @@
-<div class="column-container" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
+<div class="column-container"
+     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+     (dragover)="allowDrop($event)"
+     (dragleave)="onDragLeave()"
+     (drop)="onDrop($event)">
     <div class="title-container">
         <mat-form-field>
             <input matInput [(ngModel)]="title" placeholder="Tytuł sekcji">

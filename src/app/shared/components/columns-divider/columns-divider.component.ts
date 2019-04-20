@@ -9,6 +9,7 @@ import { filter, first, withLatestFrom } from 'rxjs/operators';
 import { selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Column } from '../../interfaces/column';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { SlideMove } from '../../interfaces/slideMove';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,7 +29,7 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
     }
 
     ngOnInit() {
-        // console.log(this.dividerSibilings);
+        console.log(this.dividerSibilings);
     }
 
     ngOnDestroy() {
@@ -37,8 +38,8 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
     public onDropOnDivider(event: DragEvent): void {
         event.stopImmediatePropagation();
 
-        const droppedSlideId = +event.dataTransfer.getData('string');
-        console.log(droppedSlideId);
+        const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
+        console.log(slideMove);
 
         this.matDialog.open(ColumnTitleComponent, {
             disableClose: true,

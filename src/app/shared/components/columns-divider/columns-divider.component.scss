@@ -4,5 +4,8 @@
     @include flex(flex);
     @include size(30px, 100%);
     min-height: calc(100vh - 180px);
-    background: #007bff;
+
+    &.drag-over {
+        background: darken($white, 15%);
+    }
 }

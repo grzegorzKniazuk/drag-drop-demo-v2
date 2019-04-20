@@ -36,6 +36,8 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
     }
 
     public dragStart(event: DragEvent): void {
+        event.stopImmediatePropagation();
+
         event.dataTransfer.setData('string', JSON.stringify({
             columnID: this.columnID,
             slideID: this.slide.id,
@@ -47,7 +49,7 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
 
         const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
 
-        if (slideMove.columnID === this.columnID) { // jesli slajdy znajduja sie w tej samej kolumnie
+        if (slideMove.columnID === this.columnID && slideMove.columnID !== undefined) { // jesli slajdy znajduja sie w tej samej kolumnie
             this.store.pipe(
                 select(selectColumnByID(this.columnID)), // pobierz docelowa kolumne ze store'a
                 first(),
@@ -119,7 +121,7 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
                     },
                 }));
             });
-        } else if (slideMove.columnID === undefined) { // drag n drop z nierozmieszczonych slajdow na slajd w kolumnie
+        } else if (slideMove.columnID === undefined && this.slide.columnId >= 0 && this.columnID >= 0) { // drag n drop z nierozmieszczonych slajdow na slajd w kolumnie
             this.store.pipe(
                 select(selectColumnByID(this.columnID)), // pobierz docelowa kolumne
                 withLatestFrom(this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID)))), // pobierz slajd z biblioteki
