@@ -1,9 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Slide } from 'src/app/shared/interfaces/slide';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
 import { Droppable } from '../../models/droppable';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { SlideMove } from '../../interfaces/slideMove';
+import { selectColumnByID } from '../../../modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { first, withLatestFrom } from 'rxjs/operators';
+import { Column } from '../../interfaces/column';
+import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -37,5 +42,81 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
 
     public onDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
+
+        const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
+
+        if (slideMove.columnID === this.columnID) { // jesli slajdy znajduja sie w tej samej kolumnie
+            this.store.pipe(
+                select(selectColumnByID(this.columnID)), // pobierz docelowa kolumne ze store'a
+                first(),
+            ).subscribe((column: Column) => {
+
+                // zamien slajdy pozycjami w tej samej kolumnie
+                const slideToMove = column.slides.find((slide: Slide) => {
+                    return slide.id === slideMove.slideID;
+                });
+                const slideToMoveIndexInColumn = column.slides.indexOf(slideToMove);
+
+                const slideTarget = column.slides.find((slide: Slide) => {
+                    return slide.id === this.slide.id;
+                });
+                const slideTargetIndexInColumn = column.slides.indexOf(slideTarget);
+
+                column.slides[slideTargetIndexInColumn] = slideToMove;
+                column.slides[slideToMoveIndexInColumn] = slideTarget;
+
+                // aktualizuj store'a
+                this.store.dispatch(new UpdateColumn({
+                    column: {
+                        id: this.columnID,
+                        changes: {
+                            slides: column.slides,
+                        },
+                    },
+                }));
+            });
+        } else if (slideMove.columnID >= 0 && slideMove.columnID !== this.columnID) { // slajdy znajduja sie w innych kolumnach
+            this.store.pipe(
+                select(selectColumnByID(slideMove.columnID)), // pobierz wyjsciowa kolumne ze store'a
+                withLatestFrom(this.store.pipe(select(selectColumnByID(this.columnID)))), // pobierz docelowa kolumne ze store'a
+                first(),
+            ).subscribe(([ sourceColumn, targetcolumn ]: [ Column, Column ]) => {
+
+                // ustal pozycje slajdow w kolumnach
+                const slideToMove = sourceColumn.slides.find((slide: Slide) => {
+                    return slide.id === slideMove.slideID;
+                });
+
+                const slideToMoveIndexInColumn = sourceColumn.slides.indexOf(slideToMove);
+
+                const slideTarget = targetcolumn.slides.find((slide: Slide) => {
+                    return slide.id === this.slide.id;
+                });
+                const slideTargetIndexInColumn = targetcolumn.slides.indexOf(slideTarget);
+
+                // zamien miejscami
+                targetcolumn.slides[slideTargetIndexInColumn] = slideToMove;
+                sourceColumn.slides[slideToMoveIndexInColumn] = slideTarget;
+
+                // aktualizuj store'a
+                this.store.dispatch(new UpdateColumn({ // wyjsciowa kolumna
+                    column: {
+                        id: slideMove.columnID,
+                        changes: {
+                            slides: sourceColumn.slides,
+                        }
+                    }
+                }));
+
+                this.store.dispatch(new UpdateColumn({ // docelowa kolumna
+                    column: {
+                        id: this.columnID,
+                        changes: {
+                            slides: targetcolumn.slides,
+                        },
+                    },
+                }));
+            });
+        }
     }
 }

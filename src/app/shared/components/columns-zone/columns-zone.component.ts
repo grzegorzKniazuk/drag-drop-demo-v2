@@ -54,7 +54,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
         event.stopImmediatePropagation();
 
         this.slideMove = JSON.parse(event.dataTransfer.getData('string'));
-        console.log(this.slideMove);
+
         if (this.slideMove.columnID === undefined && this.slideMove.slideID) { // jesli drag n drop z biblioteki
             this.matDialog.open(ColumnTitleComponent, {
                 disableClose: true,
