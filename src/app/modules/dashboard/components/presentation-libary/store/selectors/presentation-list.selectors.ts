@@ -4,5 +4,5 @@ import { presentationListState } from './presentation-libary.selectors';
 
 export const amountOfPresentationsInLibary = createSelector(
     presentationListState,
-    presentationListEntitySelectors.selectTotal
+    presentationListEntitySelectors.selectTotal,
 );

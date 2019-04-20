@@ -15,7 +15,7 @@ export class PresentationLibaryComponent implements OnInit {
     public amountOfPresentationsInLibary$: Observable<number>;
 
     constructor(
-        private store: Store<AppState>
+        private store: Store<AppState>,
     ) {
     }
 

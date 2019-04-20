@@ -89,7 +89,11 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 };
 
                 // aktualizuj tablice kolumn
-                columns = [ ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1), newColumn, ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length) ];
+                columns = [
+                    ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1),
+                    newColumn,
+                    ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length),
+                ];
 
                 // wyczysc kolumny
                 this.store.dispatch(new DeleteAllColumns());
@@ -125,7 +129,11 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 };
 
                 // aktualizuj tablice kolumn
-                columns = [ ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1), newColumn, ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length) ];
+                columns = [
+                    ...columns.slice(0, this.dividerSibilings.leftSideColumnID + 1),
+                    newColumn,
+                    ...columns.slice(this.dividerSibilings.rightSideColumnID, columns.length),
+                ];
 
                 // usun slajd z listy nierozmieszczonych slajdow
                 this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ sourceSlide.id ] }));

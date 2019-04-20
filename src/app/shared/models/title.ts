@@ -8,6 +8,7 @@ export abstract class Title<T> {
         private matDialogRef: MatDialogRef<T>,
     ) {
     }
+
     public cancel(): void {
         this.matDialogRef.close();
     }

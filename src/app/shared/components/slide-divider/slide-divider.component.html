@@ -1,5 +1,5 @@
-<div class="slide-divider"
-     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+<div (dragleave)="onDragLeave()"
      (dragover)="allowDrop($event)"
      (drop)="onDrop($event)"
-     (dragleave)="onDragLeave()"></div>
+     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+     class="slide-divider"></div>

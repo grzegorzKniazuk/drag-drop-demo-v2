@@ -1,5 +1,5 @@
-<div class="column-divider"
-     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+<div (dragleave)="onDragLeave()"
      (dragover)="allowDrop($event)"
-     (dragleave)="onDragLeave()"
-     (drop)="onDropOnDivider($event)"></div>
+     (drop)="onDropOnDivider($event)"
+     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+     class="column-divider"></div>

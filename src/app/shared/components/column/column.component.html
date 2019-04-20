@@ -1,17 +1,18 @@
-<div class="column-container"
-     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+<div (dragleave)="onDragLeave()"
      (dragover)="allowDrop($event)"
-     (dragleave)="onDragLeave()"
-     (drop)="onDrop($event)">
+     (drop)="onDrop($event)"
+     [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
+     class="column-container">
     <div class="title-container">
         <mat-form-field>
-            <input matInput [(ngModel)]="title" placeholder="Tytuł sekcji">
+            <input [(ngModel)]="title" matInput placeholder="Tytuł sekcji">
         </mat-form-field>
     </div>
     <div class="thumbnails-container">
         <ng-container *ngFor="let slide of slides; let i = index">
-            <dd-slide-thumbnail [slide]="slide" [columnID]="id"></dd-slide-thumbnail>
-            <dd-slide-divider *ngIf="slides.length !== i + 1"></dd-slide-divider>
+            <dd-slide-thumbnail [columnID]="id" [slide]="slide"></dd-slide-thumbnail>
+            <dd-slide-divider *ngIf="slides.length !== i + 1" [columnID]="id"
+                              [dividerSibilings]="{ topID: i, bottomID: i + 1 }"></dd-slide-divider>
         </ng-container>
     </div>
 </div>

@@ -1,14 +1,15 @@
-<div class="columns-zone-container"
-     [ngClass]="(amountOfPresentationColumns$ | async) ? 'columns' : 'no-columns' "
+<div (dragover)="allowDrop($event)"
      (drop)="addSectionOnDrop($event)"
-     (dragover)="allowDrop($event)">
-    <strong class="no-columns-container" *ngIf="!(amountOfPresentationColumns$ | async)">
+     [ngClass]="(amountOfPresentationColumns$ | async) ? 'columns' : 'no-columns' "
+     class="columns-zone-container">
+    <strong *ngIf="!(amountOfPresentationColumns$ | async)" class="no-columns-container">
         Przeciągnij tutaj slajdy aby dodać nową sekcję w prezentacji
     </strong>
     <ng-container *ngIf="(amountOfPresentationColumns$ | async) as amountOfPresentationColumns">
         <ng-container *ngFor="let column of (columnsEntities$ | async); let i = index">
-            <dd-column [id]="column.id" [title]="column.title" [slides]="column.slides"></dd-column>
-            <dd-columns-divider *ngIf="amountOfPresentationColumns !== i + 1" [dividerSibilings]="{ leftSideColumnID: column.id, rightSideColumnID: column.id + 1 }"></dd-columns-divider>
-    </ng-container>
+            <dd-column [id]="column.id" [slides]="column.slides" [title]="column.title"></dd-column>
+            <dd-columns-divider *ngIf="amountOfPresentationColumns !== i + 1"
+                                [dividerSibilings]="{ leftSideColumnID: column.id, rightSideColumnID: column.id + 1 }"></dd-columns-divider>
+        </ng-container>
     </ng-container>
 </div>

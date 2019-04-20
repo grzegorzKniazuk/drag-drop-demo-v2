@@ -17,9 +17,9 @@ export class PresentationListEffects {
     public addPresentation$: Observable<void> = this.actions$.pipe(
         ofType<AddPresentation>(PresentationListActionsTypes.AddPresentation),
         switchMap((action: AddPresentation) => {
-             return this.router.navigateByUrl('/dashboard/presentation-creator').then(() => {
-                 return this.store.dispatch(new AddColumns({ columns: action.payload.presentation.columns }));
-             });
+            return this.router.navigateByUrl('/dashboard/presentation-creator').then(() => {
+                return this.store.dispatch(new AddColumns({ columns: action.payload.presentation.columns }));
+            });
         }),
     );
 

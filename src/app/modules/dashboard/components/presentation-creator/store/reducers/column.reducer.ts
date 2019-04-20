@@ -7,8 +7,7 @@ export interface ColumnState extends EntityState<Column> {
 
 export const columnAdapter: EntityAdapter<Column> = createEntityAdapter<Column>();
 
-export const initialColumunState: ColumnState = columnAdapter.getInitialState({
-});
+export const initialColumunState: ColumnState = columnAdapter.getInitialState({});
 
 export function columnReducer(state = initialColumunState, action: ColumnActions): ColumnState {
     switch (action.type) {

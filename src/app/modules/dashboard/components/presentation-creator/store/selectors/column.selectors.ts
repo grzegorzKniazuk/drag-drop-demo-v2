@@ -16,5 +16,5 @@ export const selectColumnByID = (columnID: number) => {
     return createSelector(
         columnsState,
         state => state.entities[columnID],
-    )
+    );
 };

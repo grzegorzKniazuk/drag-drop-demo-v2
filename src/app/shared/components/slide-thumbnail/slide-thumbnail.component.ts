@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { Slide } from 'src/app/shared/interfaces/slide';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
