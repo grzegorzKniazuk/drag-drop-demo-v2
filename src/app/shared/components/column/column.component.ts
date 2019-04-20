@@ -77,7 +77,7 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
                 }));
 
                 // usun slajd z biblioteki
-                // this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
             });
         } else if (slideMove.columnID >= 0 && slideMove.slideID) { // jesli drag n drop z innej kolumny
             this.store.pipe(

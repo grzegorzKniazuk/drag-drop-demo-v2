@@ -6,4 +6,8 @@
     img {
         @include size(200px);
     }
+
+    &.drag-over {
+        opacity: 0.65;
+    }
 }

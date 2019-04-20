@@ -10,6 +10,7 @@ import { first, withLatestFrom } from 'rxjs/operators';
 import { Column } from '../../interfaces/column';
 import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
+import { AddSlidesToLibary, DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -133,6 +134,7 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
                 targetColumn.slides[slideTargetIndexInColumn] = slideFromLibary;
 
                 // aktualizuj store'a
+                // dodaj przeniesiony slajd do kolumny
                 this.store.dispatch(new UpdateColumn({
                     column: {
                         id: this.columnID,
@@ -140,6 +142,14 @@ export class SlideThumbnailComponent extends Droppable implements OnInit, OnDest
                             slides: targetColumn.slides,
                         },
                     },
+                }));
+
+                // usun przeniesiony slajd z bibloteki
+                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
+
+                // dodaj zamieniony slajd do bibloteki
+                this.store.dispatch(new AddSlidesToLibary({
+                    slides: [ this.slide ],
                 }));
             });
         }

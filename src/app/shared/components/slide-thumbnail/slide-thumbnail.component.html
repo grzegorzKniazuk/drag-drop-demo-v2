@@ -1,3 +1,9 @@
-<div class="slide-container" *ngIf="slide" (dragstart)="dragStart($event)" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
+<div class="slide-container"
+     [ngClass]="isElementOnDragOver && columnID >= 0 ? 'drag-over' : ''"
+     *ngIf="slide"
+     (dragstart)="dragStart($event)"
+     (dragover)="allowDrop($event)"
+     (dragleave)="onDragLeave()"
+     (drop)="onDrop($event)">
     <img [src]="slide.imageData" alt="">
 </div>

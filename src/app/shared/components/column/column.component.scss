@@ -4,7 +4,6 @@
     @include flex(flex, flex-start, center, column);
     @include size(200px, 100%);
     min-height: calc(100vh - 180px);
-    background: #28a745;
     z-index: 1;
 
     .title-container {
