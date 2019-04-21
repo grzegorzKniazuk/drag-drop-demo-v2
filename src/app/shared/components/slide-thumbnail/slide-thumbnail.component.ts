@@ -11,6 +11,7 @@ import { Column } from '../../interfaces/column';
 import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { AddSlidesToLibary, DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { NavigationError, Router } from '@angular/router';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,6 +29,7 @@ export class SlideThumbnailComponent extends Droppable implements OnDestroy {
     constructor(
         private store: Store<AppState>,
         private changeDetectorRef: ChangeDetectorRef,
+        private router: Router,
     ) {
         super();
     }
@@ -186,7 +188,9 @@ export class SlideThumbnailComponent extends Droppable implements OnDestroy {
     }
 
     public editSlide(): void {
-
+        this.router.navigateByUrl(`/dashboard/presentation-creator/${this.columnID}/${this.slide.id}`).catch((error: NavigationError) => {
+            console.log(error);
+        });
     }
 
     public onMouseEnter(): void {

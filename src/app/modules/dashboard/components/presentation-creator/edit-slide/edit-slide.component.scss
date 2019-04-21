@@ -1,0 +1,16 @@
+@import "./src/assets/styles/base.scss";
+
+.canvas-container {
+    @include flex(flex, center, center, column, relative);
+    @include size(100%, 100%);
+    background: unique_id();
+
+    canvas {
+        border: 1px solid black;
+    }
+
+    .background-image {
+        position: absolute;
+        @include size(1280px, 720px);
+    }
+}
