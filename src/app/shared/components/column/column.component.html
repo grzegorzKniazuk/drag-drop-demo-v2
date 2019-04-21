@@ -6,7 +6,7 @@
      [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
      class="column-container">
     <div class="title-container">
-        <mat-icon *ngIf="isMouseEnter" (click)="removeSection()">close</mat-icon>
+        <mat-icon (click)="removeSection()" *ngIf="isMouseEnter">close</mat-icon>
         <mat-form-field>
             <input [(ngModel)]="title" matInput placeholder="Tytuł sekcji">
         </mat-form-field>

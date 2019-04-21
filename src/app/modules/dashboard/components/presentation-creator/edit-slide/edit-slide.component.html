@@ -1,6 +1,12 @@
 <div class="canvas-container">
-    <canvas #canvasElement height="720" width="1280">
+    <canvas #canvasElement
+            (click)="click($event)"
+            (mousedown)="mouseDown($event)"
+            (mousemove)="mouseMove($event)"
+            (mouseup)="mouseUp($event)"
+            height="720"
+            width="1280">
         Twoja przegladarka nie wspiera elementów canvas
     </canvas>
-    <div class="background-image" *ngIf="backgroundImageStyle" [style]="backgroundImageStyle"></div>
+    <div *ngIf="backgroundImageStyle" [style]="backgroundImageStyle" class="background-image"></div>
 </div>

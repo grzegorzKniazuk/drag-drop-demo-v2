@@ -183,7 +183,7 @@ export class SlideThumbnailComponent extends Droppable implements OnDestroy {
                 })));
             });
         } else if (this.columnID === undefined) { // jesli slajd znajduje sie w bibliotece
-            this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slide.id ]}));
+            this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slide.id ] }));
         }
     }
 

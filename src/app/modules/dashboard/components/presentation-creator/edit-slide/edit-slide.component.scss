@@ -3,10 +3,11 @@
 .canvas-container {
     @include flex(flex, center, center, column, relative);
     @include size(100%, 100%);
-    background: unique_id();
 
     canvas {
         border: 1px solid black;
+        background: transparent;
+        z-index: 1;
     }
 
     .background-image {

@@ -4,7 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromPresentationCreator from './store';
 import { EffectsModule } from '@ngrx/effects';
-import { EditSlideComponent } from './edit-slide/edit-slide.component'
+import { EditSlideComponent } from './edit-slide/edit-slide.component';
 
 @NgModule({
     declarations: [
@@ -14,7 +14,7 @@ import { EditSlideComponent } from './edit-slide/edit-slide.component'
     imports: [
         SharedModule,
         StoreModule.forFeature('presentationCreator', fromPresentationCreator.reducers, { metaReducers: fromPresentationCreator.metaReducers }),
-        EffectsModule.forFeature([ ]),
+        EffectsModule.forFeature([]),
     ],
     exports: [
         PresentationCreatorComponent,

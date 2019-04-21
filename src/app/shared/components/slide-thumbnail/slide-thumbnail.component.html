@@ -1,13 +1,13 @@
 <div (dragleave)="onDragLeave()"
      (dragover)="allowDrop($event)"
      (dragstart)="dragStart($event)"
+     (drop)="onDrop($event)"
      (mouseenter)="onMouseEnter()"
      (mouseleave)="onMouseLeave()"
-     (drop)="onDrop($event)"
      *ngIf="slide"
      [ngClass]="isElementOnDragOver && columnID >= 0 ? 'drag-over' : ''"
      class="slide-container">
     <img [src]="slide.imageData" alt="">
-    <mat-icon *ngIf="isMouseEnter" (click)="editSlide()">edit</mat-icon>
-    <mat-icon *ngIf="isMouseEnter" (click)="removeSlide()">close</mat-icon>
+    <mat-icon (click)="editSlide()" *ngIf="isMouseEnter">edit</mat-icon>
+    <mat-icon (click)="removeSlide()" *ngIf="isMouseEnter">close</mat-icon>
 </div>
