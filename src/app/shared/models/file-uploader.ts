@@ -3,14 +3,16 @@ import { AppState } from '../../store';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Slide } from '../interfaces/slide';
 import { AddSlidesToLibary } from '../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { DemoFilesImageData } from './demo-files-image-data';
 
-export abstract class FileUploader {
+export abstract class FileUploader extends DemoFilesImageData {
 
     @ViewChild('fileInputElement') protected fileInputElement: ElementRef;
     protected files: FileList;
     protected slides: Slide[] = [];
 
     protected constructor(protected store: Store<AppState>) {
+        super();
     }
 
     public clickIntoFileInput(): void {
