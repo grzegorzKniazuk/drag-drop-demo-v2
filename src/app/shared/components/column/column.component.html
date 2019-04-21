@@ -1,9 +1,12 @@
 <div (dragleave)="onDragLeave()"
      (dragover)="allowDrop($event)"
      (drop)="onDrop($event)"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()"
      [ngClass]="isElementOnDragOver ? 'drag-over' : ''"
      class="column-container">
     <div class="title-container">
+        <mat-icon *ngIf="isMouseEnter" (click)="removeSection()">close</mat-icon>
         <mat-form-field>
             <input [(ngModel)]="title" matInput placeholder="Tytuł sekcji">
         </mat-form-field>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
@@ -10,14 +10,16 @@ import { Slide } from '../../interfaces/slide';
 import { Column } from '../../interfaces/column';
 import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'dd-slide-divider',
     templateUrl: './slide-divider.component.html',
     styleUrls: [ './slide-divider.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SlideDividerComponent extends Droppable implements OnInit {
+export class SlideDividerComponent extends Droppable implements OnDestroy {
 
     @Input() public columnID: number;
     @Input() public dividerSibilings: { topID: number, bottomID: number };
@@ -29,8 +31,7 @@ export class SlideDividerComponent extends Droppable implements OnInit {
         super();
     }
 
-    public ngOnInit(): void {
-        console.log(this.dividerSibilings);
+    ngOnDestroy() {
     }
 
     public onDrop(event: DragEvent): void {
@@ -111,8 +112,8 @@ export class SlideDividerComponent extends Droppable implements OnInit {
             });
         } else if (slideMove.columnID !== this.columnID && slideMove.slideID) { // jesli drag n drop ze zrodlem w innej kolumnie
             this.store.pipe(
-                select(selectColumnByID(this.columnID)), // poczatkowa kolumna
-                withLatestFrom(this.store.pipe(select(selectColumnByID(slideMove.columnID)))), // docelowa kolumna
+                select(selectColumnByID(slideMove.columnID)), // poczatkowa kolumna
+                withLatestFrom(this.store.pipe(select(selectColumnByID(this.columnID)))), // docelowa kolumna
                 first(),
                 tap(() => {
                     this.isElementOnDragOver = false;
@@ -134,7 +135,7 @@ export class SlideDividerComponent extends Droppable implements OnInit {
                         id: slideMove.columnID,
                         changes: {
                             slides: [ ...sourceColumn.slides.filter((slide: Slide) => {
-                                return slide.id === slideMove.slideID;
+                                return slide.id !== slideMove.slideID;
                             }) ],
                         },
                     },

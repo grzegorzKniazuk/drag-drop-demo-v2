@@ -23,9 +23,6 @@ export function columnReducer(state = initialColumunState, action: ColumnActions
         case ColumnActionTypes.UpdateColumns: {
             return columnAdapter.updateMany(action.payload.columns, state);
         }
-        case ColumnActionTypes.DeleteColumn: {
-            return columnAdapter.removeOne(action.payload.id, state);
-        }
         case ColumnActionTypes.DeleteAllColumns: {
             return columnAdapter.removeAll(state);
         }

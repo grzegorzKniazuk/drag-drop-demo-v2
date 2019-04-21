@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Slide } from '../../interfaces/slide';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
@@ -7,9 +7,9 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { SlideMove } from '../../interfaces/slideMove';
 import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { first } from 'rxjs/operators';
-import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { AddColumns, DeleteAllColumns, UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
-import { selectColumnByID } from '../../../modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { selectColumnByID, selectColumnsState } from '../../../modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Column } from '../../interfaces/column';
 
 @AutoUnsubscribe()
@@ -24,9 +24,11 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
     @Input() public id: number;
     @Input() public title: string;
     @Input() public slides: Slide[];
+    public isMouseEnter: boolean;
 
     constructor(
         private store: Store<AppState>,
+        private changeDetectorRef: ChangeDetectorRef,
     ) {
         super();
     }
@@ -122,5 +124,45 @@ export class ColumnComponent extends Droppable implements OnInit, OnDestroy {
                 }));
             });
         }
+    }
+
+    public removeSection(): void {
+
+        // pobierz wszystkie kolumny
+        this.store.pipe(
+            select(selectColumnsState),
+            first(),
+        ).subscribe((columns: Column[]) => {
+
+            // usun z tablicy usuwana kolumne
+            columns = columns.filter((column: Column) => {
+                return column.id !== this.id;
+            });
+
+            // obniz id dla kolumn po prawej
+            columns.forEach((column: Column) => {
+                if (column.id > this.id) {
+                    column.id--;
+                }
+            });
+
+            // usun wszystkie kolumny
+            this.store.dispatch(new DeleteAllColumns());
+
+            // dodaj zaktualizowane kolumny
+            this.store.dispatch(new AddColumns({
+                columns: columns,
+            }));
+        });
+    }
+
+    public onMouseEnter(): void {
+        this.isMouseEnter = true;
+        this.changeDetectorRef.detectChanges();
+    }
+
+    public onMouseLeave(): void {
+        this.isMouseEnter = false;
+        this.changeDetectorRef.detectChanges();
     }
 }

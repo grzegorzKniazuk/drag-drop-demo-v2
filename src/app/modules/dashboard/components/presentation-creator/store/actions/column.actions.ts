@@ -39,13 +39,6 @@ export class UpdateColumns implements Action {
     }
 }
 
-export class DeleteColumn implements Action {
-    public readonly type = ColumnActionTypes.DeleteColumn;
-
-    constructor(public payload: { id: string }) {
-    }
-}
-
 export class DeleteAllColumns implements Action {
     public readonly type = ColumnActionTypes.DeleteAllColumns;
 }
@@ -55,5 +48,4 @@ export type ColumnActions =
     | AddColumns
     | UpdateColumn
     | UpdateColumns
-    | DeleteColumn
     | DeleteAllColumns;

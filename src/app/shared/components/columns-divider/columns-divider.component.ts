@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { DividerSiblings } from '../../interfaces/divider-siblings';
 import { Droppable } from '../../models/droppable';
 import { select, Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/pr
     styleUrls: [ './columns-divider.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ColumnsDividerComponent extends Droppable implements OnInit, OnDestroy {
+export class ColumnsDividerComponent extends Droppable implements OnDestroy {
 
     @Input() public dividerSibilings: DividerSiblings;
 
@@ -32,9 +32,6 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
         private changeDetectorRef: ChangeDetectorRef,
     ) {
         super();
-    }
-
-    ngOnInit() {
     }
 
     ngOnDestroy() {
@@ -50,13 +47,13 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 disableClose: true,
                 hasBackdrop: true,
             }).afterClosed().pipe(
-                filter((columnTitle: string) => !!columnTitle),
-                first(),
-                withLatestFrom(this.store.pipe(select(selectColumnsState))),
                 tap(() => {
                     this.isElementOnDragOver = false;
                     this.changeDetectorRef.detectChanges();
                 }),
+                filter((columnTitle: string) => !!columnTitle),
+                first(),
+                withLatestFrom(this.store.pipe(select(selectColumnsState))),
             ).subscribe(([ columTitle, columns ]: [ string, Column[] ]) => {
 
                 // zrodlowa kolumna
@@ -116,16 +113,16 @@ export class ColumnsDividerComponent extends Droppable implements OnInit, OnDest
                 disableClose: true,
                 hasBackdrop: true,
             }).afterClosed().pipe(
+                tap(() => {
+                    this.isElementOnDragOver = false;
+                    this.changeDetectorRef.detectChanges();
+                }),
                 filter((columnTitle: string) => !!columnTitle),
                 first(),
                 withLatestFrom(
                     this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID))), // slajd do przeniesienia
                     this.store.pipe(select(selectColumnsState)), // wszystkie kolumny
                 ),
-                tap(() => {
-                    this.isElementOnDragOver = false;
-                    this.changeDetectorRef.detectChanges();
-                }),
             ).subscribe(([ columTitle, sourceSlide, columns ]: [ string, Slide, Column[] ]) => {
 
                 // przygotuj kolumny

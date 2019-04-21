@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Title } from '../../models/title';
 import { MatDialogRef } from '@angular/material';
 
@@ -9,7 +9,11 @@ import { MatDialogRef } from '@angular/material';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnTitleComponent extends Title<ColumnTitleComponent> {
-    constructor(matDialogRef: MatDialogRef<ColumnTitleComponent>) {
-        super(matDialogRef);
+
+    constructor(
+        matDialogRef: MatDialogRef<ColumnTitleComponent>,
+        changeDetectorRef: ChangeDetectorRef,
+    ) {
+        super(matDialogRef, changeDetectorRef);
     }
 }

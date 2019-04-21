@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Title } from '../../models/title';
 
@@ -11,7 +11,8 @@ import { Title } from '../../models/title';
 export class PresentationTitleComponent extends Title<PresentationTitleComponent> {
     constructor(
         matDialogRef: MatDialogRef<PresentationTitleComponent>,
+        changeDetectorRef: ChangeDetectorRef,
     ) {
-        super(matDialogRef);
+        super(matDialogRef, changeDetectorRef);
     }
 }
