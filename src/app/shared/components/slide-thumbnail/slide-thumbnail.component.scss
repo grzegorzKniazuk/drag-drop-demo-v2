@@ -1,11 +1,37 @@
 @import "./src/assets/styles/base.scss";
 
 .slide-container {
-    @include flex(flex, center, center, row);
+    @include flex(flex, center, center, row, relative);
     z-index: 2;
 
     img {
         @include size(200px);
+    }
+
+    mat-icon {
+        @include mat-icon-size(25px);
+        position: absolute;
+        z-index: 3;
+
+        &:first-of-type {
+            top: 0;
+            right: -25px;
+
+            &:hover {
+                cursor: pointer;
+                color: $primary;
+            }
+        }
+
+        &:last-of-type {
+            top: 25px;
+            right: -25px;
+
+            &:hover {
+                cursor: pointer;
+                color: $danger;
+            }
+        }
     }
 
     &.drag-over {

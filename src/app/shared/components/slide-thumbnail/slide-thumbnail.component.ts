@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { Slide } from 'src/app/shared/interfaces/slide';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store';
@@ -23,9 +23,11 @@ export class SlideThumbnailComponent extends Droppable implements OnDestroy {
 
     @Input() public columnID: number;
     @Input() public slide: Slide;
+    public isMouseEnter: boolean;
 
     constructor(
         private store: Store<AppState>,
+        private changeDetectorRef: ChangeDetectorRef,
     ) {
         super();
     }
@@ -153,5 +155,47 @@ export class SlideThumbnailComponent extends Droppable implements OnDestroy {
                 }));
             });
         }
+    }
+
+    public removeSlide(): void {
+        // jesli slajd znajduje sie w kolumnie
+        if (this.columnID >= 0) {
+            this.store.pipe(
+                select(selectColumnByID(this.columnID)), // pobierz kolumne dla tego slajdu
+                first(),
+            ).subscribe((column: Column) => {
+
+                // usun slajd z kolumny
+                column.slides = column.slides.filter((slide: Slide) => {
+                    return slide.id !== this.slide.id;
+                });
+
+                // aktualizuj kolumne
+                this.store.dispatch(new UpdateColumn(({
+                    column: {
+                        id: this.columnID,
+                        changes: {
+                            slides: column.slides,
+                        },
+                    },
+                })));
+            });
+        } else if (this.columnID === undefined) { // jesli slajd znajduje sie w bibliotece
+            this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ this.slide.id ]}));
+        }
+    }
+
+    public editSlide(): void {
+
+    }
+
+    public onMouseEnter(): void {
+        this.isMouseEnter = true;
+        this.changeDetectorRef.detectChanges();
+    }
+
+    public onMouseLeave(): void {
+        this.isMouseEnter = false;
+        this.changeDetectorRef.detectChanges();
     }
 }
