@@ -1,14 +1,14 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../../../store';
+import { AppState } from 'src/app/store';
 import { ActivatedRoute } from '@angular/router';
-import { Slide } from '../../../../../shared/interfaces/slide';
+import { Slide } from 'src/app/shared/interfaces/slide';
 import { selectColumnsState } from '../store/selectors/column.selectors';
 import { first } from 'rxjs/operators';
-import { Column } from '../../../../../shared/interfaces/column';
+import { Column } from 'src/app/shared/interfaces/column';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { Rectangle } from '../../../../../shared/interfaces/rectangle';
+import { Rectangle } from 'src/app/shared/interfaces/rectangle';
 import { selectSlideFromLibaryById } from '../store/selectors/slide-libary.selectors';
 
 @AutoUnsubscribe()

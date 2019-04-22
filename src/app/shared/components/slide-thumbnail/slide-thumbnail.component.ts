@@ -1,16 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { Slide } from 'src/app/shared/interfaces/slide';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../store';
+import { AppState } from 'src/app/store';
 import { Droppable } from '../../models/droppable';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { SlideMove } from '../../interfaces/slideMove';
-import { selectColumnByID } from '../../../modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import { selectColumnByID } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { first, withLatestFrom } from 'rxjs/operators';
 import { Column } from '../../interfaces/column';
-import { UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
-import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
-import { AddSlidesToLibary, DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { UpdateColumn } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { selectSlideFromLibaryById } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
+import {
+    AddSlidesToLibary,
+    DeleteSlidesFromLibary,
+} from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 import { NavigationError, Router } from '@angular/router';
 
 @AutoUnsubscribe()

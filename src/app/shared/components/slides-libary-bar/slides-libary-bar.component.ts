@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Slide } from 'src/app/shared/interfaces/slide';
 import { slidesLibaryEntities } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { FileUploader } from '../../models/file-uploader';
-import { AddSlidesToLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { AddSlidesToLibary } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @Component({
     selector: 'dd-slides-libary-bar',

@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Presentation } from '../../../../../../shared/interfaces/presentation';
+import { Presentation } from 'src/app/shared/interfaces/presentation';
 import { PresentationListActions, PresentationListActionsTypes } from '../actions/presentation-list.actions';
 
 export interface PresentationListState extends EntityState<Presentation> {

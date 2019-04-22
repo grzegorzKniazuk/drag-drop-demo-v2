@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../../store';
+import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
 import { amountOfPresentationsInLibary } from './store/selectors/presentation-list.selectors';
 

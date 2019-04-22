@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Presentation } from '../../../../../../shared/interfaces/presentation';
+import { Presentation } from 'src/app/shared/interfaces/presentation';
 
 export enum PresentationListActionsTypes {
     AddPresentation = '[PresentationList] Add Presentation',

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store';
-import { AddPresentation } from '../../../modules/dashboard/components/presentation-libary/store/actions/presentation-list.actions';
+import { AppState } from 'src/app/store';
+import { AddPresentation } from 'src/app/modules/dashboard/components/presentation-libary/store/actions/presentation-list.actions';
 import { MatDialog } from '@angular/material';
 import { PresentationTitleComponent } from '../presentation-title/presentation-title.component';
 import { filter, first } from 'rxjs/operators';

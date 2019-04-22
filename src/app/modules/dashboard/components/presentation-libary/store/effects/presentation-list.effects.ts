@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../../store';
+import { AppState } from 'src/app/store';
 import { AddColumns } from '../../../presentation-creator/store/actions/column.actions';
 
 @Injectable({

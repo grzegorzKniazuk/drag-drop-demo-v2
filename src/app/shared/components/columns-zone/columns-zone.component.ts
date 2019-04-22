@@ -2,18 +2,22 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import { Observable } from 'rxjs';
-import { amountOfPresentationColumns, selectColumnByID, selectColumnsState } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
+import {
+    amountOfPresentationColumns,
+    selectColumnByID,
+    selectColumnsState,
+} from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/column.selectors';
 import { Droppable } from '../../models/droppable';
 import { filter, first, withLatestFrom } from 'rxjs/operators';
-import { AddColumn, UpdateColumn } from '../../../modules/dashboard/components/presentation-creator/store/actions/column.actions';
+import { AddColumn, UpdateColumn } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/column.actions';
 import { MatDialog } from '@angular/material';
 import { ColumnTitleComponent } from '../column-title/column-title.component';
 import { Column } from '../../interfaces/column';
-import { selectSlideFromLibaryById } from '../../../modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
+import { selectSlideFromLibaryById } from 'src/app/modules/dashboard/components/presentation-creator/store/selectors/slide-libary.selectors';
 import { Slide } from '../../interfaces/slide';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { SlideMove } from '../../interfaces/slideMove';
-import { DeleteSlidesFromLibary } from '../../../modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
+import { DeleteSlidesFromLibary } from 'src/app/modules/dashboard/components/presentation-creator/store/actions/slide-libary.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -42,14 +46,6 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
     ngOnDestroy() {
     }
 
-    private initAmountOfPresentationColumns(): void {
-        this.amountOfPresentationColumns$ = this.store.pipe(select(amountOfPresentationColumns));
-    }
-
-    private initColumnEntities(): void {
-        this.columnsEntities$ = this.store.pipe(select(selectColumnsState));
-    }
-
     public addSectionOnDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
 
@@ -66,23 +62,23 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                     this.store.pipe(select(selectSlideFromLibaryById(slideMove.slideID))),
                     this.store.pipe(select(amountOfPresentationColumns)),
                 ))
-            .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
+                .subscribe(([ columnTitle, droppedSlide, numberOfColumns ]: [ string, Slide, number ]) => {
 
-                // aktualizuj id slajdu
-                droppedSlide.columnId = numberOfColumns;
+                    // aktualizuj id slajdu
+                    droppedSlide.columnId = numberOfColumns;
 
-                // dodaj kolumne z nowym elementem
-                this.store.dispatch(new AddColumn({
-                    column: {
-                        id: numberOfColumns,
-                        title: columnTitle,
-                        slides: [ droppedSlide ],
-                    },
-                }));
+                    // dodaj kolumne z nowym elementem
+                    this.store.dispatch(new AddColumn({
+                        column: {
+                            id: numberOfColumns,
+                            title: columnTitle,
+                            slides: [ droppedSlide ],
+                        },
+                    }));
 
-                // usun element z biblioteki
-                this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
-            });
+                    // usun element z biblioteki
+                    this.store.dispatch(new DeleteSlidesFromLibary({ ids: [ slideMove.slideID ] }));
+                });
         } else if (slideMove.columnID >= 0 && slideMove.slideID) { // jesli drag n drop z innej kolumny
             this.matDialog.open(ColumnTitleComponent, {
                 disableClose: true,
@@ -126,5 +122,13 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
                 }));
             });
         }
+    }
+
+    private initAmountOfPresentationColumns(): void {
+        this.amountOfPresentationColumns$ = this.store.pipe(select(amountOfPresentationColumns));
+    }
+
+    private initColumnEntities(): void {
+        this.columnsEntities$ = this.store.pipe(select(selectColumnsState));
     }
 }
