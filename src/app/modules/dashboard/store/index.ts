@@ -8,4 +8,4 @@ export interface DashboardState {
 
 export const reducers: ActionReducerMap<DashboardState> = {};
 
-export const metaReducers: MetaReducer<DashboardState>[] = !environment.production ? [] : [ storeFreeze ];
+export const metaReducers: MetaReducer<DashboardState>[] = environment.production ? [] : [ storeFreeze ];
