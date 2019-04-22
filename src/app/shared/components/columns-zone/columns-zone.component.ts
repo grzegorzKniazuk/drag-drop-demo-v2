@@ -50,7 +50,7 @@ export class ColumnsZoneComponent extends Droppable implements OnInit, OnDestroy
         this.columnsEntities$ = this.store.pipe(select(selectColumnsState));
     }
 
-    private addSectionOnDrop(event: DragEvent): void {
+    public addSectionOnDrop(event: DragEvent): void {
         event.stopImmediatePropagation();
 
         const slideMove: SlideMove = JSON.parse(event.dataTransfer.getData('string'));
